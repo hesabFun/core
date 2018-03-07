@@ -1,0 +1,21 @@
+package: github.com/hesabFun/core
+homepage: https://hesabfun.com
+
+owners:
+- name: ErFUN KH
+  email: erfun.kh@gmail.com
+  homepage: https://erfun.net
+
+import:
+- package: github.com/gin-gonic/gin
+  version: ~1.2.0
+
+# testing package
+- package: github.com/stretchr/testify
+
+# ORM
+- package: github.com/go-sql-driver/mysql
+- package: upper.io/db.v3/mysql
+
+# Load environment variables from `.env` file
+- package: github.com/joho/godotenv

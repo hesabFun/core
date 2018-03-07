@@ -1,0 +1,11 @@
+development:
+    dialect: mysql
+    datasource: ${MYSQL_USERNAME}:${MYSQL_PASSWORD}@tcp(${MYSQL_ADDRESS}:${MYSQL_PORT})/$MYSQL_DATABASE?charset=utf8&parseTime=True&loc=Local
+    dir: ./migrations
+    table: migrations
+
+seed:
+    dialect: mysql
+    datasource: ${MYSQL_USERNAME}:${MYSQL_PASSWORD}@tcp(${MYSQL_ADDRESS}:${MYSQL_PORT})/$MYSQL_DATABASE?charset=utf8&parseTime=True&loc=Local
+    dir: ./seeds
+    table: seeds
