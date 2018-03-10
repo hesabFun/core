@@ -12,6 +12,7 @@ import:
 
 # testing package
 - package: github.com/stretchr/testify
+- package: github.com/xeipuuv/gojsonschema
 
 # ORM
 - package: github.com/go-sql-driver/mysql
@@ -19,3 +20,9 @@ import:
 
 # Load environment variables from `.env` file
 - package: github.com/joho/godotenv
+
+# JWT
+- package: github.com/SermoDigital/jose
+
+# new validator
+- package: gopkg.in/go-playground/validator.v9

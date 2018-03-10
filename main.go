@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/gin-gonic/gin/binding"
 	_ "github.com/joho/godotenv/autoload"
 	"upper.io/db.v3/lib/sqlbuilder"
 	"upper.io/db.v3/mysql"
@@ -19,6 +20,7 @@ var settings = mysql.ConnectionURL{
 var MySql sqlbuilder.Database
 
 func main() {
+	binding.Validator = new(defaultValidator) // update validator to v9
 
 	var DBError error
 	MySql, DBError = mysql.Open(settings)
