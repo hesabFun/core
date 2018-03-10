@@ -13,7 +13,7 @@ jobs:
           - MYSQL_USERNAME=root
           - MYSQL_PASSWORD=123456
           - MYSQL_PORT=3306
-      - image: mysql:latest
+      - image: mariadb:latest
         environment:
           - MYSQL_DATABASE=hesab_fun
           - MYSQL_ROOT_PASSWORD=123456
