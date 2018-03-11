@@ -56,24 +56,6 @@ func loginController(c *gin.Context) {
 	})
 }
 
-func parseToken(c *gin.Context) {
-	rsaPublic, _ := crypto.ParseRSAPublicKeyFromPEM([]byte(os.Getenv("JWT_PUBLIC_KEY")))
-	jwt, err := jws.ParseJWTFromRequest(c.Request)
-	if err != nil {
-		c.JSON(400, gin.H{"message": err.Error()})
-		return
-	}
-
-	if err = jwt.Validate(rsaPublic, crypto.SigningMethodRS256); err != nil {
-		c.JSON(400, gin.H{"message": err.Error()})
-		return
-	}
-
-	c.JSON(200, gin.H{
-		"data": jwt.Claims(),
-	})
-}
-
 func generateToken(userId uint) (string, error) {
 	exp, _ := strconv.Atoi(os.Getenv("JWT_EXPIRATION"))
 

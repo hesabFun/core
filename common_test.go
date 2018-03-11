@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gin-gonic/gin/binding"
 	"os"
 	"testing"
 	"upper.io/db.v3/mysql"
@@ -8,6 +9,8 @@ import (
 
 // This function is used to do setup before executing the test functions
 func TestMain(m *testing.M) {
+	binding.Validator = new(defaultValidator) // update validator to v9
+
 	//Set Gin to Test Mode
 	var DBError error
 	MySql, DBError = mysql.Open(settings)

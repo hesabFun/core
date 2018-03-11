@@ -17,6 +17,7 @@ var settings = mysql.ConnectionURL{
 	Password: os.Getenv("MYSQL_PASSWORD"),
 }
 
+// MySql driver
 var MySql sqlbuilder.Database
 
 func main() {
