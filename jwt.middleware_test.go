@@ -13,7 +13,7 @@ func TestJwtMiddleware(t *testing.T) {
 	router := setupRouter()
 	w := httptest.NewRecorder()
 
-	req, _ := http.NewRequest("GET", "/v1/auth/user", nil)
+	req, _ := http.NewRequest("GET", "/v1/auth/profile", nil)
 	req.Header.Add("Authorization", "Bearer "+os.Getenv("JWT_TEST_TOKEN"))
 	router.ServeHTTP(w, req)
 
@@ -25,7 +25,7 @@ func TestJwtMiddlewareFail(t *testing.T) {
 	router := setupRouter()
 	w := httptest.NewRecorder()
 
-	req, _ := http.NewRequest("GET", "/v1/auth/user", nil)
+	req, _ := http.NewRequest("GET", "/v1/auth/profile", nil)
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, 401, w.Code)
