@@ -16,7 +16,7 @@ var claims jws.Claims
 
 func loginController(c *gin.Context) {
 	var request struct {
-		Mobile   string `json:"mobile" binding:"required,gte=10,lte=12"`
+		Mobile   string `json:"username" binding:"required,gte=10,lte=12"`
 		Password string `json:"password" binding:"required,gte=0,lte=255"`
 	}
 
@@ -37,7 +37,9 @@ func loginController(c *gin.Context) {
 
 	claims = jws.Claims{
 		"user": struct {
-			Name, Status, Type string
+			Name   string `json:"name"`
+			Status string `json:"status"`
+			Type   string `json:"type"`
 		}{
 			Name:   user.Name,
 			Status: user.Status,

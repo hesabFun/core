@@ -24,5 +24,8 @@ import:
 # JWT
 - package: github.com/SermoDigital/jose
 
-# new validator
+# validator v9
 - package: gopkg.in/go-playground/validator.v9
+
+# CORS
+- package: github.com/gin-contrib/cors

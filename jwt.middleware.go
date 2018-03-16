@@ -8,10 +8,10 @@ import (
 )
 
 type LoginUser struct {
-	Id     string
-	Name   string
-	Status string
-	Type   string
+	Id     string `json:"id"`
+	Name   string `json:"name"`
+	Status string `json:"status"`
+	Type   string `json:"type"`
 }
 
 // user login info
@@ -34,9 +34,9 @@ func jwtAuthMiddleware() gin.HandlerFunc {
 		temp := jwt.Claims().Get("user").(map[string]interface{})
 
 		loginUser.Id, _ = jwt.Claims().Subject()
-		loginUser.Name = temp["Name"].(string)
-		loginUser.Status = temp["Status"].(string)
-		loginUser.Type = temp["Type"].(string)
+		loginUser.Name = temp["name"].(string)
+		loginUser.Status = temp["status"].(string)
+		loginUser.Type = temp["type"].(string)
 
 		c.Next()
 	}
