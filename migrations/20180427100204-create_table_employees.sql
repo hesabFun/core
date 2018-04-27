@@ -16,7 +16,6 @@ CREATE TABLE `employees` (
     ON UPDATE NO ACTION
 )
   ENGINE = InnoDB
-  AUTO_INCREMENT = 2
   DEFAULT CHARSET = utf8;
 
 -- +migrate Down

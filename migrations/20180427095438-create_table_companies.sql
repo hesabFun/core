@@ -6,7 +6,6 @@ CREATE TABLE `companies` (
   KEY `company categories` (`name`)
 )
   ENGINE = InnoDB
-  AUTO_INCREMENT = 2
   DEFAULT CHARSET = utf8;
 
 -- +migrate Down

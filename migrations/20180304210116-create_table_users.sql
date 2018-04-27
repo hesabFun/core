@@ -16,7 +16,6 @@ CREATE TABLE `users` (
   UNIQUE KEY `email` (`email`, `mobile`)
 )
   ENGINE = InnoDB
-  AUTO_INCREMENT = 6
   DEFAULT CHARSET = utf8;
 
 -- +migrate Down
