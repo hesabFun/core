@@ -5,6 +5,8 @@ CREATE TABLE `rbac_roles` (
   `role`      VARCHAR(64)                           NOT NULL DEFAULT '',
   `pre_role`  VARCHAR(255)                          NOT NULL DEFAULT '',
   `type`      ENUM ('get', 'post', 'put', 'delete') NOT NULL DEFAULT 'get',
+  `menu`      ENUM ('no', 'yes')                    NOT NULL DEFAULT 'no',
+  `oeder`     INT(11)                               NOT NULL,
   `parent_id` INT(11) UNSIGNED                      NOT NULL,
   PRIMARY KEY (`id`),
   KEY `parent role` (`parent_id`),
