@@ -5,7 +5,6 @@ CREATE TABLE `product_photos` (
   `file`       VARCHAR(255)                                NOT NULL DEFAULT ''
   COMMENT 'File name',
   `file_size`  INT(11)                                     NOT NULL,
-  `file_type`  ENUM ('jpg', 'jpeg', 'png', 'gif', 'other') NOT NULL DEFAULT 'other',
   `width`      INT(11)                                     NOT NULL,
   `length`     INT(11)                                     NOT NULL,
   `order`      INT(2)                                      NOT NULL,
