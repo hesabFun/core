@@ -1,5 +1,5 @@
 hash: 07bce3d74bfad0c0504b9b0367bfc6ea6cd7730b03b5286ca96521c279beaf07
-updated: 2018-03-15T14:55:21.272371+03:30
+updated: 2018-04-28T13:37:58.630729+04:30
 imports:
 - name: github.com/gin-contrib/cors
   version: df6cfb7ff4a38d694dfebd0868ecb3e956171366
@@ -11,7 +11,7 @@ imports:
   - binding
   - render
 - name: github.com/go-playground/locales
-  version: e4cbcb5d0652150d40ad0646651076b6bd2be4f6
+  version: f63010822830b6fe52288ee52d5a1151088ce039
   subpackages:
   - currency
 - name: github.com/go-playground/universal-translator
@@ -43,7 +43,7 @@ imports:
   subpackages:
   - codec
 - name: github.com/xeipuuv/gojsonschema
-  version: 8bcffc811467a5f691810420385be6e66b35a317
+  version: 2c8e4be869c17540b336bab0ea18b8d73e6a28b7
 - name: golang.org/x/sys
   version: dd2ff4accc098aceecb86b36eaa7829b2a17b1c9
   subpackages:
@@ -55,7 +55,7 @@ imports:
 - name: gopkg.in/go-playground/validator.v8
   version: 5f1438d3fca68893a817e4a66806cea46a9e4ebf
 - name: gopkg.in/go-playground/validator.v9
-  version: 1b8c8e19cd250435025214492d9a08411d760fdd
+  version: 14984d91328f9612b58443cbdf4a077d4fd71091
 - name: gopkg.in/yaml.v2
   version: 7f97868eec74b32b0982dd158a51a446d1da7eb5
 - name: upper.io/db.v3
