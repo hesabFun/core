@@ -5,6 +5,8 @@ version: 2
 jobs:
   # build
   build:
+    requires:
+      - test
     docker:
       # specify the version
       - image: circleci/golang:latest
@@ -15,8 +17,6 @@ jobs:
       - run: glide install
       - run: cp -r .env.example .env
       - run: go build
-    requires:
-      - test
 
   # test
   test:
