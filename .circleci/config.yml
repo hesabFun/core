@@ -7,6 +7,18 @@ jobs:
     docker:
       # specify the version
       - image: circleci/golang:latest
+    working_directory: /go/src/github.com/hesabFun/core
+    steps:
+      - checkout
+      - run: curl https://glide.sh/get | sh
+      - run: glide install
+      - run: cp -r .env.example .env
+      - run: go build
+  # test stage
+  test:
+    docker:
+      # specify the version
+      - image: circleci/golang:latest
         environment:
           - MYSQL_ADDRESS=localhost
           - MYSQL_DATABASE=hesab_fun
@@ -41,3 +53,10 @@ jobs:
       - run: go build
       - run: go test -v ./...  -race -coverprofile=coverage.txt -covermode=atomic
       - run: bash <(curl -s https://codecov.io/bash) -t ${CODECOV_TOKEN}
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - test
+      - build
