@@ -28,7 +28,7 @@ func main() {
 	if DBError != nil {
 		log.Fatal("MySQL Error: ", DBError)
 	}
-	MySql.SetLogging(false)
+	MySql.SetLogging(true)
 	defer MySql.Close()
 
 	router := setupRouter()

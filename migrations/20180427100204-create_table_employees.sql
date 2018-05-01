@@ -5,6 +5,8 @@ CREATE TABLE `employees` (
   `company_id` INT(11) UNSIGNED                                                             NOT NULL,
   `status`     ENUM ('pending', 'active', 'block')                                          NOT NULL DEFAULT 'pending',
   `type`       ENUM ('none', 'manager', 'accountant', 'headmaster_accountant', 'technical') NOT NULL DEFAULT 'none',
+  `created_at` TIMESTAMP                                                                    NOT NULL DEFAULT current_timestamp(),
+  `deleted_at` TIMESTAMP                                                                    NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   KEY `company_id` (`company_id`),
   KEY `user_id` (`user_id`),

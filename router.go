@@ -14,17 +14,26 @@ func setupRouter() *gin.Engine {
 	corsConfig.AllowHeaders = []string{"Origin,Content-Length,Content-Type,Authorization"}
 	router.Use(cors.New(corsConfig))
 
-	v1 := router.Group("/v1")
-
-	v1.POST("/auth/login", loginController)
-	authRoute := v1.Group("/auth")
-	authRoute.Use(jwtAuthMiddleware())
-	authRoute.GET("/profile", profileController)
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "Hello world!",
 		})
 	})
+
+	router.POST("/v1/auth/login", loginController)
+
+	v1 := router.Group("/v1", jwtAuthMiddleware(), rbacCompanyMiddleware())
+
+	authRoute := v1.Group("/auth")
+	authRoute.GET("/profile", profileController)
+
+	companies := v1.Group("/companies")
+	companies.GET("/")
+	companies.GET("/:id")
+	companies.GET("/:id/menu")
+
+	menu := v1.Group("/menu")
+	menu.GET("/", getMenu)
 
 	return router
 }

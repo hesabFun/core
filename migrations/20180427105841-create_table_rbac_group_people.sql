@@ -1,6 +1,6 @@
 -- +migrate Up
 CREATE TABLE `rbac_group_people` (
-  `id`       INT(11)          NOT NULL,
+  `id`       INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `group_id` INT(11) UNSIGNED NOT NULL,
   `user_id`  INT(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
