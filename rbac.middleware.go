@@ -6,13 +6,14 @@ import (
 	"strings"
 )
 
+var companyId int
+
 // role-base access control middleware for companies
 // Check https://en.wikipedia.org/wiki/Role-based_access_control for more details
 func rbacCompanyMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		path := strings.Split(c.Request.URL.Path, "/")
 		dbPath := rbacGetDBPath(path)
-		var companyId int
 
 		if len(path) > 3 {
 			companyId, _ = strconv.Atoi(path[3])
