@@ -30,10 +30,7 @@ func setupRouter() *gin.Engine {
 	companies := v1.Group("/companies")
 	companies.GET("/")
 	companies.GET("/:id")
-	companies.GET("/:id/menu")
-
-	menu := v1.Group("/menu")
-	menu.GET("/", getMenu)
+	companies.GET("/:id/menu", getMenu)
 
 	return router
 }
