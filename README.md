@@ -14,9 +14,11 @@ Set ENV, `MYSQL_DATABASE=your_db_name`, `MYSQL_ADDRESS=localhost`, `MYSQL_USERNA
 
 Install sql-migrate, run `go get -v github.com/rubenv/sql-migrate/...`
 
-Migrate tables, run `sql-migrate`
+Migrate tables, run `sql-migrate up`
 
-Database seeding, run `sql-migrate -env=seed`
+Database seeding, run `sql-migrate up -env=seed`
+
+Database seed test data, run `sql-migrate up -env=test`
 
 Run `cp .env.example .env` and insert your env
 
@@ -36,4 +38,5 @@ Run `go test`
 
 Run `sql-migrate your_mgirate_title` to generate a new migrate file in `./migrations`.
 
-Run `sql-migrate your_seed_title -env=seed` to generate a new seed file in `./seeds`.
+Run `sql-migrate -env=seed your_seed_title` to generate a new seed file in `./seeds`.
+Run `sql-migrate -env=test your_test_title` to generate a new seed file in `./seed_test`.
