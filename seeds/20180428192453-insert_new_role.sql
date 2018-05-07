@@ -3,9 +3,11 @@ INSERT INTO `rbac_roles` (`id`, `alias`, `path`, `method`, `menu`, `order`, `par
 VALUES
   (1, 'index', '/', 'get', 'no', 0, 0),
   (2, 'login', '/v1/auth/login', 'post', 'no', 0, 0),
-  (3, 'profile', '/v1/auth/profile', 'get', 'no', 0, 0),
-  (4, 'menu', '/v1/menu', 'get', 'no', 0, 0);
+  (3, 'get profile', '/v1/auth/profile', 'get', 'no', 0, 0),
+  (4, 'get companies', '/v1/companies', 'get', 'no', 0, 0),
+  (5, 'get company details', '/v1/companies/:id', 'get', 'no', 0, 0),
+  (6, 'get menu', '/v1/companies/:id/menu', 'get', 'no', 0, 0);
 
 -- +migrate Down
 DELETE FROM `rbac_roles`
-WHERE `id` = 1 OR 2 OR 3 OR 4;
+WHERE `id` = 1 OR 2 OR 3 OR 4 OR 5 OR 6;

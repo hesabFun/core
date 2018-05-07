@@ -50,8 +50,8 @@ jobs:
       - run: glide install
       - run: go get github.com/rubenv/sql-migrate/...
       - run: sql-migrate up
-      - run: sql-migrate up -env=test
       - run: sql-migrate up -env=seed
+      - run: sql-migrate up -env=test
       - run: cp -r .env.example .env
       - run: go test -v ./...  -race -coverprofile=coverage.txt -covermode=atomic
       - run: bash <(curl -s https://codecov.io/bash) -t ${CODECOV_TOKEN}
