@@ -39,4 +39,5 @@ Run `go test`
 Run `sql-migrate your_mgirate_title` to generate a new migrate file in `./migrations`.
 
 Run `sql-migrate -env=seed your_seed_title` to generate a new seed file in `./seeds`.
+
 Run `sql-migrate -env=test your_test_title` to generate a new seed file in `./seed_test`.
