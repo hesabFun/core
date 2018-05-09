@@ -69,6 +69,8 @@ jobs:
       - run: cp -r .env.example .env
       - run: go build
       - run: go get github.com/rubenv/sql-migrate/...
+      - run: which sql-migrate
+      - run: cp /go/bin/sql-migrate .
 
       # use a primary image that already has Docker (recommended)
       # or install it during a build like we do here
