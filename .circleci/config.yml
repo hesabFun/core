@@ -88,10 +88,12 @@ jobs:
           name: build and push Docker image
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
-            docker build -t hesabfun/core:latest .                  # (4)
+            docker build -t hesabfun/core:$TAG .                    # (4)
             docker login quay.io -u $DOCKER_USER -p $DOCKER_PASS    # (5)
-            sudo service docker start
-            docker push hesabfun/core:latest
+            sudo groupadd docker
+            sudo usermod -aG docker $USER
+            sudo service docker restart
+            docker push hesabfun/core:$TAG
 
 # Check https://circleci.com/docs/2.0/workflows/ for more details
 workflows:
