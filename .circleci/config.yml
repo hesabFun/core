@@ -69,7 +69,6 @@ jobs:
       - run: cp -r .env.example .env
       - run: go build
       - run: go get github.com/rubenv/sql-migrate/...
-      - run: setup-docker-engine
 
       # use a primary image that already has Docker (recommended)
       # or install it during a build like we do here
@@ -85,6 +84,7 @@ jobs:
 #            mv /tmp/docker/* /usr/bin
 
       # build and push Docker image
+      - setup_remote_docker
       - run:
           name: build and push Docker image
           command: |
