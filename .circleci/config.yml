@@ -75,12 +75,20 @@ jobs:
       - run:
           name: Install Docker client
           command: |
-            set -x
-            VER="18.03.1-ce"
-            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
-            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            export PATH="/tmp/docker/:$PATH"
-#            mv /tmp/docker/* /usr/bin
+            apt-get update
+            apt-get install \
+                 apt-transport-https \
+                 ca-certificates \
+                 curl \
+                 gnupg2 \
+                 software-properties-common
+            curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+            add-apt-repository \
+               "deb [arch=amd64] https://download.docker.com/linux/debian \
+               $(lsb_release -cs) \
+               stable"
+            apt-get update
+            apt-get install docker-ce
 
       # build and push Docker image
       - run:
