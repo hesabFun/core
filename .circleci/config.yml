@@ -92,7 +92,7 @@ jobs:
             docker login quay.io -u $DOCKER_USER -p $DOCKER_PASS    # (5)
             sudo groupadd docker
             sudo usermod -aG docker $USER
-            sudo service docker restart
+            sudo systemctl restart docker
             docker push hesabfun/core:$TAG
 
 # Check https://circleci.com/docs/2.0/workflows/ for more details
