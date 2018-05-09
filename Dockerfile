@@ -1,17 +1,15 @@
-FROM golang:1.9
+FROM alpine:3.6
 
-USER nobody
+RUN mkdir -p /migrations
+WORKDIR /migrations
 
-RUN mkdir -p /go/src/github.com/hesabFun/core
-WORKDIR /go/src/github.com/hesabFun/core
+COPY ./core /bin
+COPY /go/bin/sql-migrate /bin
+COPY ./migrations .
+COPY ./seeds .
+COPY ./dbconfig.yml .
+COPY ./run .
 
-COPY . /go/src/github.com/hesabFun/core
-RUN curl https://glide.sh/get | sh && \
-        glide install && \
-        go get github.com/rubenv/sql-migrate/... && \
-#        sql-migrate up && \
-#        sql-migrate up -env=seed && \
-        cp -r .env.example .env && \
-        go build
+EXPOSE 8080
 
-CMD ["go", "run"]
+CMD ["./run"]

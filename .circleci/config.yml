@@ -56,6 +56,40 @@ jobs:
       - run: go test -v ./...  -race -coverprofile=coverage.txt -covermode=atomic
       - run: bash <(curl -s https://codecov.io/bash) -t ${CODECOV_TOKEN}
 
+  # deploy
+  deploy:
+    docker:
+      # specify the version
+      - image: circleci/golang:latest
+    working_directory: /go/src/github.com/hesabFun/core
+    steps:
+      - checkout
+      - run: curl https://glide.sh/get | sh
+      - run: glide install
+      - run: cp -r .env.example .env
+      - run: go build
+      - run: go get github.com/rubenv/sql-migrate/...
+
+      # use a primary image that already has Docker (recommended)
+      # or install it during a build like we do here
+      - run:
+          name: Install Docker client
+          command: |
+            set -x
+            VER="18.03.1-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            mv /tmp/docker/* /usr/bin
+
+      # build and push Docker image
+      - run:
+          name: build and push Docker image
+          command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker build -t hesabfun/core:latest .                  # (4)
+            docker login quay.io -u $DOCKER_USER -p $DOCKER_PASS    # (5)
+            docker push hesabfun/core:latest
+
 # Check https://circleci.com/docs/2.0/workflows/ for more details
 workflows:
   version: 2
@@ -65,3 +99,6 @@ workflows:
       - build:
           requires:
             - test
+      - deploy:
+          requires:
+            - build
