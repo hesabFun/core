@@ -69,7 +69,6 @@ jobs:
       - run: cp -r .env.example .env
       - run: go build
       - run: go get github.com/rubenv/sql-migrate/...
-      - run: which sql-migrate
       - run: cp /go/bin/sql-migrate .
 
       # build and push Docker image

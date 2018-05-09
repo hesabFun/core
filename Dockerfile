@@ -4,7 +4,7 @@ RUN mkdir -p /migrations
 WORKDIR /migrations
 
 COPY ./core /bin
-COPY /go/bin/sql-migrate /bin
+COPY ./sql-migrate /bin
 COPY ./migrations .
 COPY ./seeds .
 COPY ./dbconfig.yml .
