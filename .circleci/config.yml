@@ -46,7 +46,6 @@ jobs:
       - checkout
 
       # specify any bash command here prefixed with `run: `
-      - run: docker --version
       - run: curl https://glide.sh/get | sh
       - run: glide install
       - run: go get github.com/rubenv/sql-migrate/...
@@ -73,11 +72,10 @@ jobs:
 
       # use a primary image that already has Docker (recommended)
       # or install it during a build like we do here
-      - run:
-          name: Install Docker client
-          command: |
-            wget -qO- https://get.docker.com/ | sh
-            docker --version
+#      - run:
+#          name: Install Docker client
+#          command: |
+#            wget -qO- https://get.docker.com/ | sh
 #            set -x
 #            VER="18.03.1-ce"
 #            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
