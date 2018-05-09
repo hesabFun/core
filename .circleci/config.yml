@@ -73,7 +73,7 @@ jobs:
       # use a primary image that already has Docker (recommended)
       # or install it during a build like we do here
       - run:
-          name: Install Docker client
+          name: Install Docker client, build and push Docker image
           command: |
             sudo apt-get update
             sudo apt-get install \
@@ -90,14 +90,19 @@ jobs:
             sudo apt-get update
             sudo apt-get install docker-ce
 
-      # build and push Docker image
-      - run:
-          name: build and push Docker image
-          command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
-            docker build -t hesabfun/core:latest .                  # (4)
+            docker build -t hesabfun/core:$TAG .                  # (4)
             docker login quay.io -u $DOCKER_USER -p $DOCKER_PASS    # (5)
-            docker push hesabfun/core:latest
+            docker push hesabfun/core:$TAG
+
+      # build and push Docker image
+#      - run:
+#          name: build and push Docker image
+#          command: |
+#            TAG=0.1.$CIRCLE_BUILD_NUM
+#            docker build -t hesabfun/core:$TAG .                  # (4)
+#            docker login quay.io -u $DOCKER_USER -p $DOCKER_PASS    # (5)
+#            docker push hesabfun/core:$TAG
 
 # Check https://circleci.com/docs/2.0/workflows/ for more details
 workflows:
