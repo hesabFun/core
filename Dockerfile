@@ -15,3 +15,6 @@ RUN chmod +x ./run
 EXPOSE 8080
 
 CMD ["./run"]
+
+# Specify the default user for the Docker image to run as.
+USER 1001
