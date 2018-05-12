@@ -10,6 +10,8 @@ COPY ./seeds .
 COPY ./dbconfig.yml .
 COPY ./run .
 
+RUN chmod +x ./run
+
 EXPOSE 8080
 
 CMD ["./run"]
