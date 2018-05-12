@@ -82,6 +82,10 @@ jobs:
             docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
             docker push hesabfun/core:$TAG
             docker push hesabfun/core:latest
+            docker logout
+            docker login -u="$OPENSHIFT_USER" -p="$OPENSHIFT_PASS"
+            docker tag hesabfun/core:latest docker-registry.default.svc:5000/hesabfun/core:latest
+            docker push docker-registry.default.svc:5000/hesabfun/core:latest
 
 # Check https://circleci.com/docs/2.0/workflows/ for more details
 workflows:
