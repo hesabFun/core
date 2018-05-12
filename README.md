@@ -1,10 +1,10 @@
 # HeasbFun - core
 [![Build Status](https://circleci.com/gh/hesabFun/core.svg?&style=shield)](https://circleci.com/gh/hesabFun/core)
-[![Docker Repository on Quay](https://quay.io/repository/hesabfun/core/status "Docker Repository on Quay")](https://quay.io/repository/hesabfun/core)
+[![Docker](https://img.shields.io/docker/stars/hesabfun/core.svg?maxAge=2592000)](https://hub.docker.com/r/hesabfun/core/)
 [![codecov](https://codecov.io/gh/hesabFun/core/branch/master/graph/badge.svg)](https://codecov.io/gh/hesabFun/core)
 [![Go Report](https://goreportcard.com/badge/github.com/hesabFun/core)](https://goreportcard.com/report/github.com/hesabFun/core)
 [![License](https://img.shields.io/badge/License-AGPL%203.0-blue.svg)](https://github.com/hesabFun/core/blob/master/LICENSE)
-[![Docker](https://img.shields.io/docker/stars/hesabfun/core.svg?maxAge=2592000)](https://hub.docker.com/r/hesabfun/core/)
+
 
 Free, open source and cross-platform finance application
 
