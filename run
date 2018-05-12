@@ -1,6 +1,6 @@
 #!/bin/sh
 
-/bin/sql-migrate up
-/bin/sql-migrate up -env=seed
+./sql-migrate up
+./sql-migrate up -env=seed
 
-/bin/core
+./core

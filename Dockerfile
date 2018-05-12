@@ -1,20 +1,20 @@
 FROM alpine:3.6
 
-RUN mkdir -p /migrations
-WORKDIR /migrations
+RUN mkdir -p /app
+WORKDIR /app
 
-COPY ./core /bin
-COPY ./sql-migrate /bin
+COPY ./core .
+COPY ./sql-migrate .
 COPY ./migrations .
 COPY ./seeds .
 COPY ./dbconfig.yml .
-COPY ./run .
+#COPY ./run .
 
-RUN chmod +x ./run
+#RUN chmod +x ./run
 
 EXPOSE 8080
 
-CMD ["./run"]
+CMD ["sql-migrate up", "sql-migrate up -env=seed", "core"]
 
 # Specify the default user for the Docker image to run as.
 USER 1001
