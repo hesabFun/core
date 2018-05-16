@@ -32,5 +32,10 @@ func setupRouter() *gin.Engine {
 	companies.GET("/:id")
 	companies.GET("/:id/menu", getMenu)
 
+	companies.GET("/:id/products")
+	//companies.POST("/:id/products", insertNewProduct)
+
+	companies.POST("/:id/categories", insertNewCategory)
+
 	return router
 }

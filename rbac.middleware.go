@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-var companyId int
+var companyId uint
 
 // role-base access control middleware for companies
 // Check https://en.wikipedia.org/wiki/Role-based_access_control for more details
@@ -16,7 +16,8 @@ func rbacCompanyMiddleware() gin.HandlerFunc {
 		dbPath := rbacGetDBPath(path)
 
 		if len(path) > 3 {
-			companyId, _ = strconv.Atoi(path[3])
+			u64, _ := strconv.ParseUint(path[3], 10, 32)
+			companyId = uint(u64)
 		}
 
 		if path[2] == "companies" && companyId > 0 {
