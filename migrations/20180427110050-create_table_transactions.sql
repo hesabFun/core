@@ -2,9 +2,9 @@
 CREATE TABLE `transactions` (
   `id`         BIGINT(20) UNSIGNED      NOT NULL AUTO_INCREMENT,
   `title`      VARCHAR(255)             NOT NULL DEFAULT '',
-  `company_id` INT(11) UNSIGNED         NOT NULL,
-  `product_id` INT(11) UNSIGNED         NOT NULL,
-  `user_id`    INT(11) UNSIGNED         NOT NULL,
+  `company_id` INT(11) UNSIGNED                  DEFAULT NULL,
+  `product_id` INT(11) UNSIGNED                  DEFAULT NULL,
+  `user_id`    INT(11) UNSIGNED                  DEFAULT NULL,
   `amount`     BIGINT(20)               NOT NULL,
   `type`       ENUM ('input', 'output') NOT NULL DEFAULT 'input',
   `date`       TIMESTAMP                NOT NULL DEFAULT '0000-00-00 00:00:00',
