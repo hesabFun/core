@@ -3,5 +3,5 @@ INSERT INTO `products` (`id`, `company_id`, `category_id`, `name`, `description`
 VALUES (1, 1, 1, 'product 1', 'description for this product', 12000);
 
 -- +migrate Down
-DELETE FROM `rbac_group_people`
+DELETE FROM `products`
 WHERE `id` = 1;

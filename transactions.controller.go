@@ -13,9 +13,9 @@ func insertNewTransaction(c *gin.Context) {
 		return
 	}
 
-	if transaction.ProductId.Valid {
+	if transaction.ProductId != nil {
 		err := MySql.Select("id").From("products").
-			Where("id LIKE ?", transaction.ProductId.Int64).
+			Where("id LIKE ?", transaction.ProductId).
 			Where("company_id LIKE ?", companyId).
 			One(&struct{}{})
 		if err != nil {
@@ -25,23 +25,7 @@ func insertNewTransaction(c *gin.Context) {
 	}
 
 	transaction.CompanyId = companyId
-	_, err := MySql.InsertInto("transactions").Columns(
-		"company_id",
-		"product_id",
-		"user_id",
-		"title",
-		"amount",
-		"type",
-		"date",
-	).Values(
-		companyId,
-		IfThenElse(transaction.ProductId.Valid, transaction.ProductId.Int64, nil),
-		IfThenElse(transaction.UserId.Valid, transaction.UserId.Int64, nil),
-		transaction.Title,
-		transaction.Amount,
-		transaction.Type,
-		transaction.Date,
-	).Exec()
+	_, err := MySql.InsertInto("transactions").Values(transaction).Exec()
 
 	if err != nil {
 		c.JSON(400, gin.H{"message": err.Error()})
@@ -55,7 +39,7 @@ func insertNewTransaction(c *gin.Context) {
 func getAllTransactions(c *gin.Context) {
 	var transactions []Transactions
 
-	err := MySql.Select("id").From("transactions").
+	err := MySql.Select("*").From("transactions").
 		Where("company_id LIKE ?", companyId).
 		All(&transactions)
 	if err != nil {
@@ -68,12 +52,12 @@ func getAllTransactions(c *gin.Context) {
 }
 
 type Transactions struct {
-	Id        uint      `db:"id"`
-	CompanyId uint      `db:"company_id"`
-	ProductId NullInt64 `db:"product_id" json:"product_id" binding:"lte=2147483648"`
-	UserId    NullInt64 `db:"user_id" json:"user_id" binding:"lte=2147483648"`
-	Title     string    `db:"title" json:"title" binding:"lte=64"`
-	Amount    uint      `db:"amount" json:"amount" binding:"required,gte=0,lte=9223372036854775808"`
-	Type      string    `db:"type" json:"type" binding:"required,oneof=input output"`
-	Date      string    `db:"date" json:"date" binding:"required"`
+	Id        uint   `db:"id" json:"id"`
+	CompanyId uint   `db:"company_id" json:"company_id"`
+	ProductId *uint  `db:"product_id" json:"product_id"`
+	UserId    *uint  `db:"user_id" json:"user_id"`
+	Title     string `db:"title" json:"title" binding:"lte=64"`
+	Amount    uint   `db:"amount" json:"amount" binding:"required,gte=0,lte=9223372036854775808"`
+	Type      string `db:"type" json:"type" binding:"required,oneof=input output"`
+	Date      string `db:"date" json:"date" binding:"required"`
 }
