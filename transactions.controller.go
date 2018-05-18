@@ -19,7 +19,7 @@ func insertNewTransaction(c *gin.Context) {
 			Where("company_id LIKE ?", companyId).
 			One(&struct{}{})
 		if err != nil {
-			c.JSON(400, gin.H{"message1": err.Error()})
+			c.JSON(400, gin.H{"message": err.Error()})
 			return
 		}
 	}
@@ -49,6 +49,21 @@ func insertNewTransaction(c *gin.Context) {
 	}
 
 	c.JSON(201, gin.H{"message": "successful"})
+	return
+}
+
+func getAllTransactions(c *gin.Context) {
+	var transactions []Transactions
+
+	err := MySql.Select("id").From("transactions").
+		Where("company_id LIKE ?", companyId).
+		All(&transactions)
+	if err != nil {
+		c.JSON(400, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(200, gin.H{"data": transactions})
 	return
 }
 
