@@ -20,7 +20,6 @@ func TestInsertNewProduct(t *testing.T) {
 	product.Description = "product description"
 	product.Price = 10000
 	jsonValue, _ := json.Marshal(product)
-	//println(jsonValue)
 
 	req, _ := http.NewRequest("POST", "/v1/companies/1/products", bytes.NewBuffer(jsonValue))
 	req.Header.Add("Authorization", "Bearer "+os.Getenv("JWT_TEST_TOKEN"))
