@@ -1,5 +1,5 @@
 hash: 07bce3d74bfad0c0504b9b0367bfc6ea6cd7730b03b5286ca96521c279beaf07
-updated: 2018-05-17T19:36:06.82263+04:30
+updated: 2018-05-19T10:39:15.462864+04:30
 imports:
 - name: github.com/gin-contrib/cors
   version: 6f0a820f94bea07359ec77c26855ca8cf6762739

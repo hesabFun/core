@@ -28,7 +28,7 @@ func setupRouter() *gin.Engine {
 	authRoute.GET("/profile", profileController)
 
 	companies := v1.Group("/companies")
-	companies.GET("/")
+	companies.GET("", getAllCompanies)
 	companies.GET("/:id")
 	companies.GET("/:id/menu", getMenu)
 
