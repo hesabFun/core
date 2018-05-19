@@ -29,6 +29,7 @@ func setupRouter() *gin.Engine {
 
 	companies := v1.Group("/companies")
 	companies.GET("", getAllCompanies)
+	companies.POST("", insertNewCompany)
 	companies.GET("/:id")
 	companies.GET("/:id/menu", getMenu)
 
