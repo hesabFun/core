@@ -7,6 +7,7 @@ import (
 
 func insertNewProduct(c *gin.Context) {
 	var product Products
+	companyId := c.MustGet("company_id").(uint)
 
 	if err := c.ShouldBindWith(&product, binding.JSON); err != nil {
 		c.JSON(400, gin.H{"message": err.Error()})
@@ -37,7 +38,7 @@ func insertNewProduct(c *gin.Context) {
 func getAllProducts(c *gin.Context) {
 	var products []Products
 
-	err := MySql.Collection("products").Find().Where("company_id LIKE ?", companyId).All(&products)
+	err := MySql.Collection("products").Find().Where("company_id LIKE ?", c.MustGet("company_id").(uint)).All(&products)
 	//productsCollection
 	//productsCollection.
 	//err := MySql.Select("*").From("products").

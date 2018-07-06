@@ -19,7 +19,7 @@ func getMenu(c *gin.Context) {
 		Join("rbac_group_people").On("rbac_group_people.group_id = rbac_group_roles.group_id").
 		Join("rbac_groups").On("rbac_groups.id = rbac_group_roles.group_id").
 		Where("rbac_roles.menu LIKE ?", "yes").
-		Where("rbac_groups.company_id LIKE ?", companyId).
+		Where("rbac_groups.company_id LIKE ?", c.MustGet("company_id").(uint)).
 		Where("rbac_group_people.user_id LIKE ?", loginUser.Id).
 		All(&menu)
 

@@ -7,6 +7,7 @@ import (
 
 func insertNewTransaction(c *gin.Context) {
 	var transaction Transactions
+	companyId := c.MustGet("company_id").(uint)
 
 	if err := c.ShouldBindWith(&transaction, binding.JSON); err != nil {
 		c.JSON(400, gin.H{"message": err.Error()})
@@ -40,7 +41,7 @@ func getAllTransactions(c *gin.Context) {
 	var transactions []Transactions
 
 	err := MySql.Select("*").From("transactions").
-		Where("company_id LIKE ?", companyId).
+		Where("company_id LIKE ?", c.MustGet("company_id").(uint)).
 		All(&transactions)
 	if err != nil {
 		c.JSON(400, gin.H{"message": err.Error()})

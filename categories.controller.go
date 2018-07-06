@@ -13,7 +13,7 @@ func insertNewCategory(c *gin.Context) {
 		return
 	}
 
-	category.CompanyId = companyId
+	category.CompanyId = c.MustGet("company_id").(uint)
 	_, err := MySql.InsertInto("product_categories").Values(category).Exec()
 
 	if err != nil {

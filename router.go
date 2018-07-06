@@ -30,16 +30,18 @@ func setupRouter() *gin.Engine {
 	companies := v1.Group("/companies")
 	companies.GET("", getAllCompanies)
 	companies.POST("", insertNewCompany)
-	companies.GET("/:id")
-	companies.GET("/:id/menu", getMenu)
+	companies.GET("/:companies_id")
+	companies.GET("/:companies_id/menu", getMenu)
 
-	companies.GET("/:id/products", getAllProducts)
-	companies.POST("/:id/products", insertNewProduct)
+	companies.GET("/:companies_id/products", getAllProducts)
+	companies.POST("/:companies_id/products", insertNewProduct)
 
-	companies.POST("/:id/categories", insertNewCategory)
+	companies.POST("/:companies_id/categories", insertNewCategory)
 
-	companies.GET("/:id/transactions", getAllTransactions)
-	companies.POST("/:id/transactions", insertNewTransaction)
+	companies.GET("/:companies_id/transactions", getAllTransactions)
+	companies.POST("/:companies_id/transactions", insertNewTransaction)
+
+	companies.POST("/:companies_id/employees", insertNewEmploye)
 
 	return router
 }
