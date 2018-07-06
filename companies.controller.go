@@ -9,6 +9,7 @@ import (
 
 func insertNewCompany(c *gin.Context) {
 	var company Companies
+	loginUser := c.MustGet("user").(LoginUser)
 
 	if err := c.ShouldBindWith(&company, binding.JSON); err != nil {
 		c.JSON(400, gin.H{"message": err.Error()})
@@ -56,6 +57,7 @@ func insertNewCompany(c *gin.Context) {
 
 func getAllCompanies(c *gin.Context) {
 	var companies []Companies
+	loginUser := c.MustGet("user").(LoginUser)
 
 	err := MySql.Select(
 		"companies.id as id",

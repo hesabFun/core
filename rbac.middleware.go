@@ -20,6 +20,8 @@ func rbacCompanyMiddleware() gin.HandlerFunc {
 			companyId = uint(u64)
 		}
 
+		loginUser := c.MustGet("user").(LoginUser)
+
 		if path[2] == "companies" && companyId > 0 {
 
 			// check permission for companies

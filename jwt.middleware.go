@@ -14,9 +14,6 @@ type LoginUser struct {
 	Type   string `json:"type"`
 }
 
-// user login info
-var loginUser LoginUser
-
 func jwtAuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		rsaPublic, _ := crypto.ParseRSAPublicKeyFromPEM([]byte(os.Getenv("JWT_PUBLIC_KEY")))
@@ -31,12 +28,17 @@ func jwtAuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
+		// user login info
+		var loginUser LoginUser
+
 		temp := jwt.Claims().Get("user").(map[string]interface{})
 
 		loginUser.Id, _ = jwt.Claims().Subject()
 		loginUser.Name = temp["name"].(string)
 		loginUser.Status = temp["status"].(string)
 		loginUser.Type = temp["type"].(string)
+
+		c.Set("user", loginUser)
 
 		c.Next()
 	}

@@ -5,6 +5,7 @@ import (
 )
 
 func getMenu(c *gin.Context) {
+	loginUser := c.MustGet("user").(LoginUser)
 
 	type Menu struct {
 		Alias string `db:"alias"`
