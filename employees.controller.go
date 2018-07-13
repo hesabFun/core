@@ -13,9 +13,18 @@ func insertNewEmployee(c *gin.Context) {
 		return
 	}
 
-	//todo: check user exist
+	//check user exist
+	err := MySql.Select("id").From("users").
+		Where("id", employee.UserId).
+		One(&struct{}{})
 
-	err := MySql.Select("id").From("employees").
+	if err != nil {
+		c.JSON(400, gin.H{"message": "the user_id is wrong!"})
+		return
+	}
+
+	//check employee existed
+	err = MySql.Select("id").From("employees").
 		Where("company_id", c.MustGet("company_id").(uint)).
 		Where("user_id", employee.UserId).
 		One(&struct{}{})
@@ -25,6 +34,7 @@ func insertNewEmployee(c *gin.Context) {
 		return
 	}
 
+	//add employee
 	employee.CompanyId = c.MustGet("company_id").(uint)
 	employee.Status = "pending"
 	_, err = MySql.InsertInto("employees").Values(employee).Exec()
