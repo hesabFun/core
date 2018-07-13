@@ -24,9 +24,7 @@ func getMenu(c *gin.Context) {
 		All(&menu)
 
 	if err != nil {
-		c.JSON(400, gin.H{
-			"message": "db error!",
-		})
+		c.JSON(400, gin.H{"message": err.Error()})
 		return
 	}
 

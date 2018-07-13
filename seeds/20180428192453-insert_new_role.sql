@@ -10,10 +10,11 @@ VALUES
   (7, 'insert new category', '/v1/companies/:id/categories', 'post', 'no', 0, 0),
   (8, 'insert new product', '/v1/companies/:id/products', 'post', 'no', 0, 0),
   (9, 'insert new transaction', '/v1/companies/:id/transactions', 'post', 'no', 0, 0),
-  (10, 'get all transactions', '/v1/companies/:id/transactions', 'get', 'yes', 0, 0),
-  (11, 'get all products', '/v1/companies/:id/products', 'get', 'yes', 0, 0),
+  (10, 'get transactions', '/v1/companies/:id/transactions', 'get', 'yes', 0, 0),
+  (11, 'get products', '/v1/companies/:id/products', 'get', 'yes', 0, 0),
   (12, 'insert new company', '/v1/companies', 'post', 'no', 0, 0),
-  (13, 'add new employee', '/v1/companies/:id/employees', 'post', 'no', 0, 0);
+  (13, 'add new employee', '/v1/companies/:id/employees', 'post', 'no', 0, 0),
+  (14, 'get employees', '/v1/companies/:id/employees', 'get', 'yes', 0, 0);
 
 -- +migrate Down
 DELETE FROM `rbac_roles`

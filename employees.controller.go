@@ -48,6 +48,29 @@ func insertNewEmployee(c *gin.Context) {
 	return
 }
 
+func getAllEmployeesOfCompany(c *gin.Context) {
+	type EmployeesWithData struct {
+		Id     uint   `db:"id" json:"id"`
+		UserId uint   `db:"user_id" json:"user_id"`
+		Status string `db:"status" json:"status"`
+		Name   string `db:"name" json:"name"`
+	}
+
+	var employees []EmployeesWithData
+
+	err := MySql.Select("employees.id", "employees.user_id", "employees.status", "users.name").From("employees").
+		Join("users").On("users.id = employees.user_id").
+		Where("employees.company_id", c.MustGet("company_id").(uint)).
+		All(&employees)
+
+	if err != nil {
+		c.JSON(400, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(200, gin.H{"menu": employees})
+}
+
 type Employees struct {
 	Id        uint   `db:"id" json:"id"`
 	CompanyId uint   `db:"company_id" json:"company_id"`
