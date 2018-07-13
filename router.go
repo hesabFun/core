@@ -41,7 +41,7 @@ func setupRouter() *gin.Engine {
 	companies.GET("/:companies_id/transactions", getAllTransactions)
 	companies.POST("/:companies_id/transactions", insertNewTransaction)
 
-	companies.POST("/:companies_id/employees", insertNewEmploye)
+	companies.POST("/:companies_id/employees", insertNewEmployee)
 
 	return router
 }

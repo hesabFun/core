@@ -25,7 +25,6 @@ func rbacCompanyMiddleware() gin.HandlerFunc {
 		if path[2] == "companies" && companyId > 0 {
 
 			// check permission for companies
-			res := struct{}{}
 			err := MySql.Select("rbac_roles.id as role_id").From("rbac_roles").
 				Where("rbac_roles.path LIKE ?", dbPath).
 				Where("rbac_roles.method LIKE ?", c.Request.Method).
@@ -34,7 +33,7 @@ func rbacCompanyMiddleware() gin.HandlerFunc {
 				Join("rbac_group_roles").On("rbac_group_roles.role_id = rbac_roles.id").
 				Join("rbac_group_people").On("rbac_group_people.group_id = rbac_group_roles.group_id").
 				Join("rbac_groups").On("rbac_groups.id = rbac_group_roles.group_id").
-				One(&res)
+				One(&struct{}{})
 
 			if err != nil {
 				respondWithError(403, "permission denied!", c)

@@ -12,8 +12,9 @@ VALUES
   (9, 'insert new transaction', '/v1/companies/:id/transactions', 'post', 'no', 0, 0),
   (10, 'get all transactions', '/v1/companies/:id/transactions', 'get', 'yes', 0, 0),
   (11, 'get all products', '/v1/companies/:id/products', 'get', 'yes', 0, 0),
-  (12, 'insert new company', '/v1/companies', 'post', 'no', 0, 0);
+  (12, 'insert new company', '/v1/companies', 'post', 'no', 0, 0),
+  (13, 'add new employee', '/v1/companies/:id/employees', 'post', 'no', 0, 0);
 
 -- +migrate Down
 DELETE FROM `rbac_roles`
-WHERE `id` = 1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12;
+WHERE `id` = 1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13;
