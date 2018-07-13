@@ -68,7 +68,7 @@ func getAllEmployeesOfCompany(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"menu": employees})
+	c.JSON(200, employees)
 }
 
 type Employees struct {
