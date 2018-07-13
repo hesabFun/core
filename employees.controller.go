@@ -13,6 +13,8 @@ func insertNewEmployee(c *gin.Context) {
 		return
 	}
 
+	//todo: check user exist
+
 	err := MySql.Select("id").From("employees").
 		Where("company_id", c.MustGet("company_id").(uint)).
 		Where("user_id", employee.UserId).
@@ -25,7 +27,7 @@ func insertNewEmployee(c *gin.Context) {
 
 	employee.CompanyId = c.MustGet("company_id").(uint)
 	employee.Status = "pending"
-	_, err = MySql.InsertInto("transactions").Values(employee).Exec()
+	_, err = MySql.InsertInto("employees").Values(employee).Exec()
 
 	if err != nil {
 		c.JSON(400, gin.H{"message": err.Error()})
@@ -40,6 +42,6 @@ type Employees struct {
 	Id        uint   `db:"id" json:"id"`
 	CompanyId uint   `db:"company_id" json:"company_id"`
 	UserId    uint   `db:"user_id" json:"user_id"`
-	Status    string `db:"status"`
+	Status    string `db:"status" json:"status"`
 	Type      string `db:"type" json:"type" binding:"required,oneof=none manager accountant headmaster_accountant technical"`
 }

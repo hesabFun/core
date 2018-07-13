@@ -10,10 +10,10 @@ CREATE TABLE `employees` (
   PRIMARY KEY (`id`),
   KEY `company_id` (`company_id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `componay employe` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`)
+  CONSTRAINT `componay employee` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
-  CONSTRAINT `user employe` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  CONSTRAINT `user employee` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 )
