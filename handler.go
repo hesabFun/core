@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 func GetMD5Hash(text string) string {
@@ -17,4 +18,9 @@ func respondWithError(code int, message string, c *gin.Context) {
 
 	c.JSON(code, resp)
 	c.Abort()
+}
+
+func string2Int(input string) int {
+	output, _ := strconv.Atoi(input)
+	return output
 }

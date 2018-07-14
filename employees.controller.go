@@ -112,8 +112,7 @@ func changeEmployeeStatusByUser(c *gin.Context) {
 	loginUser := c.MustGet("user").(LoginUser)
 
 	var employeeStatus struct {
-		Status    string `db:"status" json:"status" binding:"required,oneof=pending active block"`
-		CompanyId uint   `db:"company_id" json:"company_id"  binding:"required"`
+		Status string `db:"status" json:"status" binding:"required,oneof=pending active block"`
 	}
 
 	if err := c.ShouldBindWith(&employeeStatus, binding.JSON); err != nil {
@@ -121,17 +120,18 @@ func changeEmployeeStatusByUser(c *gin.Context) {
 		return
 	}
 
-	res := MySql.Collection("employees").
-		Find(c.Param("employee_id")).
+	err := MySql.Select("id").From("employees").
+		Where("id", c.Param("employee_id")).
 		Where("user_id", loginUser.Id).
-		Where("company_id", employeeStatus.CompanyId)
-
-	err := res.One(&struct{}{})
+		One(&struct{}{})
 
 	if err != nil {
 		c.JSON(400, gin.H{"message": "the employee_id is wrong!"})
 		return
 	}
+
+	res := MySql.Collection("employees").
+		Find(string2Int(c.Param("employee_id")))
 
 	err = res.Update(map[string]string{
 		"status_by_employee": employeeStatus.Status,
