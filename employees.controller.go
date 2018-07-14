@@ -79,6 +79,37 @@ func getAllEmployeesOfCompany(c *gin.Context) {
 	c.JSON(200, employees)
 }
 
+func getAllAddMeToEmployeeRequests(c *gin.Context) {
+
+	loginUser := c.MustGet("user").(LoginUser)
+
+	type EmployeesWithData struct {
+		Id               uint   `db:"id" json:"id"`
+		StatusByEmployee string `db:"status_by_employee" json:"status_by_employee"`
+		StatusByCompany  string `db:"status_by_company" json:"status_by_company"`
+		Name             string `db:"name" json:"name"`
+	}
+
+	var employees []EmployeesWithData
+
+	err := MySql.Select(
+		"employees.id",
+		"employees.status_by_employee",
+		"employees.status_by_company",
+		"companies.name",
+	).From("employees").
+		Join("companies").On("companies.id = employees.company_id").
+		Where("employees.user_id", loginUser.Id).
+		All(&employees)
+
+	if err != nil {
+		c.JSON(400, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(200, employees)
+}
+
 type Employees struct {
 	Id               uint   `db:"id" json:"id"`
 	CompanyId        uint   `db:"company_id" json:"company_id"`

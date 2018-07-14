@@ -27,6 +27,8 @@ func setupRouter() *gin.Engine {
 	authRoute := v1.Group("/auth")
 	authRoute.GET("/profile", profileController)
 
+	v1.GET("/employees", getAllAddMeToEmployeeRequests)
+
 	companies := v1.Group("/companies")
 	companies.GET("", getAllCompanies)
 	companies.POST("", insertNewCompany)
