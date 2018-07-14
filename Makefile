@@ -28,4 +28,3 @@ migrate-all: migrate seed seed-test
 
 doc:
 	apidoc -i apidoc/ -o apidoc/build
-

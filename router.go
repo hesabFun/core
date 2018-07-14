@@ -28,6 +28,7 @@ func setupRouter() *gin.Engine {
 	authRoute.GET("/profile", profileController)
 
 	v1.GET("/employees", getAllAddMeToEmployeeRequests)
+	v1.PUT("/employees/:employee_id", changeEmployeeStatusByUser)
 
 	companies := v1.Group("/companies")
 	companies.GET("", getAllCompanies)
