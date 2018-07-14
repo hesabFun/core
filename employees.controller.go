@@ -36,7 +36,8 @@ func insertNewEmployee(c *gin.Context) {
 
 	//add employee
 	employee.CompanyId = c.MustGet("company_id").(uint)
-	employee.Status = "pending"
+	employee.StatusByCompany = "active"
+	employee.StatusByEmployee = "pending"
 	_, err = MySql.InsertInto("employees").Values(employee).Exec()
 
 	if err != nil {
@@ -50,15 +51,22 @@ func insertNewEmployee(c *gin.Context) {
 
 func getAllEmployeesOfCompany(c *gin.Context) {
 	type EmployeesWithData struct {
-		Id     uint   `db:"id" json:"id"`
-		UserId uint   `db:"user_id" json:"user_id"`
-		Status string `db:"status" json:"status"`
-		Name   string `db:"name" json:"name"`
+		Id               uint   `db:"id" json:"id"`
+		UserId           uint   `db:"user_id" json:"user_id"`
+		StatusByEmployee string `db:"status_by_employee" json:"status_by_employee"`
+		StatusByCompany  string `db:"status_by_company" json:"status_by_company"`
+		Name             string `db:"name" json:"name"`
 	}
 
 	var employees []EmployeesWithData
 
-	err := MySql.Select("employees.id", "employees.user_id", "employees.status", "users.name").From("employees").
+	err := MySql.Select(
+		"employees.id",
+		"employees.user_id",
+		"employees.status_by_employee",
+		"employees.status_by_company",
+		"users.name",
+	).From("employees").
 		Join("users").On("users.id = employees.user_id").
 		Where("employees.company_id", c.MustGet("company_id").(uint)).
 		All(&employees)
@@ -72,9 +80,10 @@ func getAllEmployeesOfCompany(c *gin.Context) {
 }
 
 type Employees struct {
-	Id        uint   `db:"id" json:"id"`
-	CompanyId uint   `db:"company_id" json:"company_id"`
-	UserId    uint   `db:"user_id" json:"user_id"`
-	Status    string `db:"status" json:"status"`
-	Type      string `db:"type" json:"type" binding:"required,oneof=none manager accountant headmaster_accountant technical"`
+	Id               uint   `db:"id" json:"id"`
+	CompanyId        uint   `db:"company_id" json:"company_id"`
+	UserId           uint   `db:"user_id" json:"user_id"`
+	StatusByEmployee string `db:"status_by_employee" json:"status_by_employee"`
+	StatusByCompany  string `db:"status_by_company" json:"status_by_company"`
+	Type             string `db:"type" json:"type" binding:"required,oneof=none manager accountant headmaster_accountant technical"`
 }

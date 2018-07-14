@@ -30,11 +30,13 @@ func insertNewCompany(c *gin.Context) {
 			"company_id",
 			"user_id",
 			"type",
-			"status",
+			"status_by_employee",
+			"status_by_company",
 		).Values(
 			newCompanyId,
 			loginUser.Id,
 			"manager",
+			"active",
 			"active",
 		).Exec()
 
