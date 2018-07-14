@@ -2,3 +2,4 @@ vendor
 .idea
 core
 .env
+apidoc/build
