@@ -40,15 +40,24 @@ func registerNewUser(c *gin.Context) {
 		Type:     "user",
 	}
 
-	_, err = MySql.InsertInto("users").Values(user).Exec()
+	newUser, err := MySql.InsertInto("users").Values(user).Exec()
 	if err != nil {
 		c.JSON(400, gin.H{"message": err.Error()})
 		return
 	}
 
-	c.JSON(201, gin.H{"message": "successful"})
+	//send token
+	newUserId, _ := newUser.LastInsertId()
+	user.ID = uint(newUserId)
+
+	token, err := generateToken(user)
+	if err != nil {
+		c.JSON(400, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(201, gin.H{
+		"token": token,
+	})
 	return
-
-	//todo: send token
-
 }

@@ -12,8 +12,6 @@ import (
 	"time"
 )
 
-var claims jws.Claims
-
 func loginController(c *gin.Context) {
 	var request struct {
 		Mobile   string `json:"username" binding:"required,gte=10,lte=12"`
@@ -35,7 +33,20 @@ func loginController(c *gin.Context) {
 		return
 	}
 
-	claims = jws.Claims{
+	token, err := generateToken(user)
+	if err != nil {
+		c.JSON(400, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"token": token,
+	})
+}
+
+func generateToken(user User) (string, error) {
+
+	claims := jws.Claims{
 		"user": struct {
 			Name   string `json:"name"`
 			Status string `json:"status"`
@@ -47,18 +58,6 @@ func loginController(c *gin.Context) {
 		},
 	}
 
-	token, err := generateToken(user.ID)
-	if err != nil {
-		c.JSON(400, gin.H{"message": err.Error()})
-		return
-	}
-
-	c.JSON(200, gin.H{
-		"token": token,
-	})
-}
-
-func generateToken(userId uint) (string, error) {
 	exp, err := strconv.Atoi(os.Getenv("JWT_EXPIRATION"))
 
 	if err != nil {
@@ -70,8 +69,8 @@ func generateToken(userId uint) (string, error) {
 	claims.SetAudience(os.Getenv("JWT_AUDIENCE"))
 	claims.SetIssuedAt(time.Now())
 	claims.SetNotBefore(time.Now())
-	claims.SetSubject(strconv.FormatUint(uint64(userId), 10)) // set user id
-	claims.SetJWTID("123")                                    // set token id
+	claims.SetSubject(strconv.FormatUint(uint64(user.ID), 10)) // set user id
+	claims.SetJWTID("123")                                     // set token id
 
 	rsaPrivate, err := crypto.ParseRSAPrivateKeyFromPEM([]byte(os.Getenv("JWT_PRIVATE_KEY")))
 
