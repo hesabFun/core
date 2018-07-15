@@ -11,7 +11,7 @@ func registerNewUser(c *gin.Context) {
 		//Email    string `db:"email" json:"email" binding:"email"`
 		Mobile   string `db:"mobile" json:"mobile" binding:"required"`
 		Name     string `db:"name" json:"name" binding:"lte=30"`
-		Password string `db:"password" json:"password" binding:"required,gte=0,lte=130"`
+		Password string `db:"password" json:"password" binding:"required,gte=7,lte=130"`
 	}
 
 	if err := c.ShouldBindWith(&form, binding.JSON); err != nil {
