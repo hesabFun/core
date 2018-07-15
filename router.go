@@ -21,6 +21,7 @@ func setupRouter() *gin.Engine {
 	})
 
 	router.POST("/v1/auth/login", loginController)
+	router.POST("/v1/auth/register", registerNewUser)
 
 	v1 := router.Group("/v1", jwtAuthMiddleware(), rbacCompanyMiddleware())
 

@@ -10,7 +10,6 @@ CREATE TABLE `users` (
   `remember_token` VARCHAR(255)                                 DEFAULT '',
   `sms_token`      INT(11)                                      DEFAULT NULL,
   `created_at`     TIMESTAMP                           NOT NULL DEFAULT current_timestamp(),
-  `updated_at`     TIMESTAMP                           NOT NULL DEFAULT current_timestamp(),
   `deleted_at`     TIMESTAMP                           NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`, `mobile`)

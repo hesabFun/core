@@ -59,7 +59,11 @@ func loginController(c *gin.Context) {
 }
 
 func generateToken(userId uint) (string, error) {
-	exp, _ := strconv.Atoi(os.Getenv("JWT_EXPIRATION"))
+	exp, err := strconv.Atoi(os.Getenv("JWT_EXPIRATION"))
+
+	if err != nil {
+		return "", err
+	}
 
 	claims.SetExpiration(time.Now().Add(time.Duration(60 * 60 * 24 * time.Duration(exp) * time.Second)))
 	claims.SetIssuer(os.Getenv("JWT_ISSUER"))
