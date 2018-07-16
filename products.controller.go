@@ -5,6 +5,19 @@ import (
 	"github.com/gin-gonic/gin/binding"
 )
 
+/**
+ * @api {post} /v1/companies/:id/products Insert New Product
+ * @apiName InsertNewProduct
+ * @apiGroup Products
+ * @apiVersion 0.1.0
+ *
+ * @apiUse jwt
+ *
+ * @apiParam (Request body) {Number} category_id Category ID.
+ * @apiParam (Request body) {String} name Product name.
+ * @apiParam (Request body) {String} [description] Product description.
+ * @apiParam (Request body) {Number} [price] Product price (0 is free).
+ */
 func insertNewProduct(c *gin.Context) {
 	var product Products
 	companyId := c.MustGet("company_id").(uint)
@@ -35,6 +48,14 @@ func insertNewProduct(c *gin.Context) {
 	return
 }
 
+/**
+ * @api {get} /v1/companies/:id/products Get Products List
+ * @apiName GetProductsList
+ * @apiGroup Products
+ * @apiVersion 0.1.0
+ *
+ * @apiUse jwt
+ */
 func getAllProducts(c *gin.Context) {
 	var products []Products
 

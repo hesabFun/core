@@ -15,7 +15,7 @@ func TestLogin(t *testing.T) {
 	w := httptest.NewRecorder()
 
 	jsonValue, _ := json.Marshal(map[string]string{
-		"username": "09111111111",
+		"mobile":   "09111111111",
 		"password": "12345678",
 	})
 

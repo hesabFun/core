@@ -5,6 +5,17 @@ import (
 	"github.com/gin-gonic/gin/binding"
 )
 
+/**
+ * @api {post} /v1/companies/:id/employees/ Add User To Company
+ * @apiName AddUserToCompany
+ * @apiGroup Employees
+ * @apiVersion 0.1.0
+ *
+ * @apiUse jwt
+ *
+ * @apiParam (Request body) {String=none,manager,accountant,headmaster_accountant,technical} type Type of Employee.
+ * @apiParam (Request body) {Number} user_id User ID.
+ */
 func insertNewEmployee(c *gin.Context) {
 	var employee Employees
 
@@ -49,6 +60,14 @@ func insertNewEmployee(c *gin.Context) {
 	return
 }
 
+/**
+ * @api {get} /v1/companies/:id/employees/ Get Employees List Of Company
+ * @apiName GetEmployeesListOfCompany
+ * @apiGroup Employees
+ * @apiVersion 0.1.0
+ *
+ * @apiUse jwt
+ */
 func getAllEmployeesOfCompany(c *gin.Context) {
 
 	var employees []struct {
@@ -78,6 +97,14 @@ func getAllEmployeesOfCompany(c *gin.Context) {
 	c.JSON(200, employees)
 }
 
+/**
+ * @api {get} /v1/employees Get Invite To Company List
+ * @apiName GetInviteEmployeeToCompanyList
+ * @apiGroup Employees
+ * @apiVersion 0.1.0
+ *
+ * @apiUse jwt
+ */
 func getAllAddMeToEmployeeRequests(c *gin.Context) {
 
 	loginUser := c.MustGet("user").(LoginUser)
@@ -107,6 +134,16 @@ func getAllAddMeToEmployeeRequests(c *gin.Context) {
 	c.JSON(200, employees)
 }
 
+/**
+ * @api {put} /v1/employees/:id Change Status Employee Request By User
+ * @apiName ChangeEmployeeStatus
+ * @apiGroup Employees
+ * @apiVersion 0.1.0
+ *
+ * @apiUse jwt
+ *
+ * @apiParam (Request body) {String=pending,active,block} status Employee status.
+ */
 func changeEmployeeStatusByUser(c *gin.Context) {
 
 	loginUser := c.MustGet("user").(LoginUser)
@@ -148,7 +185,7 @@ func changeEmployeeStatusByUser(c *gin.Context) {
 type Employees struct {
 	Id               uint   `db:"id" json:"id"`
 	CompanyId        uint   `db:"company_id" json:"company_id"`
-	UserId           uint   `db:"user_id" json:"user_id"`
+	UserId           uint   `db:"user_id" json:"user_id" binding:"required"`
 	StatusByEmployee string `db:"status_by_employee" json:"status_by_employee"`
 	StatusByCompany  string `db:"status_by_company" json:"status_by_company"`
 	Type             string `db:"type" json:"type" binding:"required,oneof=none manager accountant headmaster_accountant technical"`

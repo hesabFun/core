@@ -7,6 +7,16 @@ import (
 	"time"
 )
 
+/**
+ * @api {post} /v1/auth/register Register New User
+ * @apiName RegisterNewUser
+ * @apiGroup Authorization
+ * @apiVersion 0.1.0
+ *
+ * @apiParam (Request body) {String} mobile User mobile number.
+ * @apiParam (Request body) {String} password User password.
+ * @apiParam (Request body) {String} [name] User name.
+ */
 func registerNewUser(c *gin.Context) {
 	//validate data
 	var form struct {
@@ -75,6 +85,15 @@ func registerNewUser(c *gin.Context) {
 	return
 }
 
+/**
+ * @api {post} /v1/auth/sms/verify Verify User By SMS
+ * @apiName VerifyUserBySms
+ * @apiGroup Authorization
+ * @apiVersion 0.1.0
+ *
+ * @apiParam (Request body) {String} mobile User mobile number.
+ * @apiParam (Request body) {String} token  Sms Token.
+ */
 func verifyUserBySms(c *gin.Context) {
 	var form struct {
 		SmsToken int    `json:"sms_token" binding:"required,gte=999,lte=10000"`

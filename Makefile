@@ -27,4 +27,4 @@ seed-test:
 migrate-all: migrate seed seed-test
 
 doc:
-	apidoc -i apidoc/ -o apidoc/build
+	apidoc -c apidoc/config/ -o apidoc/build

@@ -4,6 +4,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+/**
+ * @api {get} /v1/companies/:id/menu Get Menu List
+ * @apiName GetMenu
+ * @apiGroup Menu
+ * @apiVersion 0.1.0
+ *
+ * @apiUse jwt
+ */
 func getMenu(c *gin.Context) {
 	loginUser := c.MustGet("user").(LoginUser)
 

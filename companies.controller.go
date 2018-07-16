@@ -7,6 +7,16 @@ import (
 	"upper.io/db.v3/lib/sqlbuilder"
 )
 
+/**
+ * @api {post} /v1/companies Insert New Company
+ * @apiName AddCompany
+ * @apiGroup Companies
+ * @apiVersion 0.1.0
+ *
+ * @apiUse jwt
+ *
+ * @apiParam (Request body) {String} name Name Of Company.
+ */
 func insertNewCompany(c *gin.Context) {
 	var company Companies
 	loginUser := c.MustGet("user").(LoginUser)
@@ -57,6 +67,14 @@ func insertNewCompany(c *gin.Context) {
 	return
 }
 
+/**
+ * @api {get} /v1/companies Get All Companies
+ * @apiName GetAllCompanies
+ * @apiGroup Companies
+ * @apiVersion 0.1.0
+ *
+ * @apiUse jwt
+ */
 func getAllCompanies(c *gin.Context) {
 	var companies []Companies
 	loginUser := c.MustGet("user").(LoginUser)

@@ -1,0 +1,12 @@
+{
+  "name": "HesabFun",
+  "version": "0.1.0",
+  "description": "Free, open source and cross-platform finance application. ",
+  "title": "HesabFun - Free, open source and cross-platform finance application. ",
+  "url": "https://api.hesabfun.com",
+  "sampleUrl": "http://localhost:8080",
+  "template": {
+    "withCompare": true,
+    "withGenerator": true
+  }
+}

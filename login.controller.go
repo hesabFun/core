@@ -12,9 +12,18 @@ import (
 	"time"
 )
 
+/**
+ * @api {post} /v1/auth/login Request User Login
+ * @apiName UserLogin
+ * @apiGroup Authorization
+ * @apiVersion 0.1.0
+ *
+ * @apiParam (Request body) {String} mobile User mobile number.
+ * @apiParam (Request body) {String} password User password.
+ */
 func loginController(c *gin.Context) {
 	var request struct {
-		Mobile   string `json:"username" binding:"required,gte=10,lte=12"`
+		Mobile   string `json:"mobile" binding:"required,gte=10,lte=12"`
 		Password string `json:"password" binding:"required,gte=0,lte=255"`
 	}
 

@@ -5,6 +5,18 @@ import (
 	"github.com/gin-gonic/gin/binding"
 )
 
+/**
+ * @api {post} /v1/companies/:id/categories Insert New Category
+ * @apiName InsertNewCategory
+ * @apiGroup Categories
+ * @apiVersion 0.1.0
+ *
+ * @apiUse jwt
+ *
+ * @apiParam (Request body) {Number} [parent_id] Parent ID.
+ * @apiParam (Request body) {String} name Category name.
+ * @apiParam (Request body) {Number} order Order.
+ */
 func insertNewCategory(c *gin.Context) {
 	var category Categorise
 
