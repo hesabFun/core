@@ -3,15 +3,17 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
+	"os"
+	"time"
 )
 
 func registerNewUser(c *gin.Context) {
 	//validate data
 	var form struct {
 		//Email    string `db:"email" json:"email" binding:"email"`
-		Mobile   string `db:"mobile" json:"mobile" binding:"required"`
-		Name     string `db:"name" json:"name" binding:"lte=30"`
-		Password string `db:"password" json:"password" binding:"required,gte=7,lte=130"`
+		Mobile   string `json:"mobile" binding:"required"`
+		Name     string `json:"name" binding:"lte=30"`
+		Password string `json:"password" binding:"required,gte=7,lte=130"`
 	}
 
 	if err := c.ShouldBindWith(&form, binding.JSON); err != nil {
@@ -33,11 +35,13 @@ func registerNewUser(c *gin.Context) {
 
 	//insert to db
 	user := User{
-		Name:     form.Name,
-		Mobile:   form.Mobile,
-		Password: GetMD5Hash(form.Password),
-		Status:   "pending",
-		Type:     "user",
+		Name:      form.Name,
+		Mobile:    form.Mobile,
+		Password:  GetMD5Hash(form.Password),
+		Status:    "pending",
+		Type:      "user",
+		SmsToken:  randomInt(1000, 9999),
+		DeletedAt: &time.Time{},
 	}
 
 	newUser, err := MySql.InsertInto("users").Values(user).Exec()
@@ -56,8 +60,51 @@ func registerNewUser(c *gin.Context) {
 		return
 	}
 
+	if os.Getenv("GIN_MODE") == "debug" {
+		c.JSON(201, gin.H{
+			"sms_token": user.SmsToken,
+			"token":     token,
+		})
+		return
+	}
+
 	c.JSON(201, gin.H{
 		"token": token,
 	})
 	return
+}
+
+func verifyUserBySms(c *gin.Context) {
+	loginUser := c.MustGet("user").(LoginUser)
+
+	var form struct {
+		SmsToken int `json:"sms_token" binding:"required,gte=999,lte=10000"`
+	}
+	if err := c.ShouldBindWith(&form, binding.JSON); err != nil {
+		c.JSON(400, gin.H{"message": err.Error()})
+		return
+	}
+
+	var user User
+	err := MySql.Select("*").From("users").
+		Where("id", loginUser.Id).
+		Where("sms_token", form.SmsToken).
+		One(&user)
+	if err != nil {
+		c.JSON(400, gin.H{"message": "the employee_id is wrong!"})
+		return
+	}
+
+	//c.JSON(200, user)
+
+	user.SmsToken = 0
+	user.Status = "active"
+	err = MySql.Collection("users").Find(string2Int(loginUser.Id)).Update(user)
+
+	if err != nil {
+		c.JSON(400, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(200, gin.H{"message": "success"})
 }

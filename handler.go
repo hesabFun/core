@@ -4,7 +4,9 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"github.com/gin-gonic/gin"
+	"math/rand"
 	"strconv"
+	"time"
 )
 
 func GetMD5Hash(text string) string {
@@ -23,4 +25,17 @@ func respondWithError(code int, message string, c *gin.Context) {
 func string2Int(input string) int {
 	output, _ := strconv.Atoi(input)
 	return output
+}
+
+func randomString(n int) string {
+	var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letterRunes[rand.Intn(len(letterRunes))]
+	}
+	return string(b)
+}
+func randomInt(min, max int) int {
+	rand.Seed(time.Now().Unix())
+	return rand.Intn(max-min) + min
 }

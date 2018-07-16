@@ -27,6 +27,7 @@ func setupRouter() *gin.Engine {
 
 	authRoute := v1.Group("/auth")
 	authRoute.GET("/profile", profileController)
+	authRoute.POST("/sms/verify", verifyUserBySms)
 
 	v1.GET("/employees", getAllAddMeToEmployeeRequests)
 	v1.PUT("/employees/:employee_id", changeEmployeeStatusByUser)
