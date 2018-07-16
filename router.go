@@ -22,12 +22,12 @@ func setupRouter() *gin.Engine {
 
 	router.POST("/v1/auth/login", loginController)
 	router.POST("/v1/auth/register", registerNewUser)
+	router.POST("/v1/auth/sms/verify", verifyUserBySms)
 
 	v1 := router.Group("/v1", jwtAuthMiddleware(), rbacCompanyMiddleware())
 
 	authRoute := v1.Group("/auth")
 	authRoute.GET("/profile", profileController)
-	authRoute.POST("/sms/verify", verifyUserBySms)
 
 	v1.GET("/employees", getAllAddMeToEmployeeRequests)
 	v1.PUT("/employees/:employee_id", changeEmployeeStatusByUser)

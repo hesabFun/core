@@ -41,7 +41,8 @@ func registerNewUser(c *gin.Context) {
 		Status:    "pending",
 		Type:      "user",
 		SmsToken:  randomInt(1000, 9999),
-		DeletedAt: &time.Time{},
+		DeletedAt: time.Time{},
+		CreatedAt: time.Now(),
 	}
 
 	newUser, err := MySql.InsertInto("users").Values(user).Exec()
@@ -75,10 +76,9 @@ func registerNewUser(c *gin.Context) {
 }
 
 func verifyUserBySms(c *gin.Context) {
-	loginUser := c.MustGet("user").(LoginUser)
-
 	var form struct {
-		SmsToken int `json:"sms_token" binding:"required,gte=999,lte=10000"`
+		SmsToken int    `json:"sms_token" binding:"required,gte=999,lte=10000"`
+		Mobile   string `json:"mobile" binding:"required"`
 	}
 	if err := c.ShouldBindWith(&form, binding.JSON); err != nil {
 		c.JSON(400, gin.H{"message": err.Error()})
@@ -87,19 +87,17 @@ func verifyUserBySms(c *gin.Context) {
 
 	var user User
 	err := MySql.Select("*").From("users").
-		Where("id", loginUser.Id).
+		Where("mobile", form.Mobile).
 		Where("sms_token", form.SmsToken).
 		One(&user)
 	if err != nil {
-		c.JSON(400, gin.H{"message": "the employee_id is wrong!"})
+		c.JSON(400, gin.H{"message": "token is wrong!"})
 		return
 	}
 
-	//c.JSON(200, user)
-
 	user.SmsToken = 0
 	user.Status = "active"
-	err = MySql.Collection("users").Find(string2Int(loginUser.Id)).Update(user)
+	err = MySql.Collection("users").Find().Where("mobile", form.Mobile).Update(user)
 
 	if err != nil {
 		c.JSON(400, gin.H{"message": err.Error()})
