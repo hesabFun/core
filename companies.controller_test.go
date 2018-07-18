@@ -24,7 +24,6 @@ func TestInsertNewCompany(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, 201, w.Code)
-	//todo: test json schema
 }
 
 func TestGetAllCompanies(t *testing.T) {
@@ -36,5 +35,21 @@ func TestGetAllCompanies(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, 200, w.Code)
-	//todo: test json schema
+}
+
+func TestInsertNewCompanyFailed(t *testing.T) {
+	router := setupRouter()
+	w := httptest.NewRecorder()
+
+	jsonValue := `
+{
+	"name": ""
+}
+`
+
+	req, _ := http.NewRequest("POST", "/v1/companies", bytes.NewBuffer([]byte(jsonValue)))
+	req.Header.Add("Authorization", "Bearer "+os.Getenv("JWT_TEST_TOKEN"))
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, 400, w.Code)
 }

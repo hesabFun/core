@@ -5,7 +5,6 @@ import (
 	"github.com/SermoDigital/jose/jws"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"upper.io/db.v3"
 
 	"os"
 	"strconv"
@@ -33,10 +32,11 @@ func loginController(c *gin.Context) {
 	}
 
 	var user User
-	err := MySql.Collection("users").Find(db.Cond{
-		"mobile":   request.Mobile,
-		"password": GetMD5Hash(request.Password),
-	}).Where("status IN ('active', 'pending')").One(&user)
+	err := MySql.Select("*").From("users").
+		Where("mobile", request.Mobile).
+		Where("password", GetMD5Hash(request.Password)).
+		One(&user)
+
 	if err != nil {
 		c.JSON(400, gin.H{"message": "Mobile or password incorrect"})
 		return

@@ -26,7 +26,24 @@ func TestInsertNewProduct(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, 201, w.Code)
-	//todo: test json schema
+}
+
+func TestInsertNewProductFailed(t *testing.T) {
+	router := setupRouter()
+	w := httptest.NewRecorder()
+
+	var product Products
+	product.Name = ""
+	product.CategoryId = 0
+	product.Description = ""
+	product.Price = 0
+	jsonValue, _ := json.Marshal(product)
+
+	req, _ := http.NewRequest("POST", "/v1/companies/1/products", bytes.NewBuffer(jsonValue))
+	req.Header.Add("Authorization", "Bearer "+os.Getenv("JWT_TEST_TOKEN"))
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, 400, w.Code)
 }
 
 func TestGetAllProducts(t *testing.T) {
@@ -38,5 +55,4 @@ func TestGetAllProducts(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, 200, w.Code)
-	//todo: test json schema
 }

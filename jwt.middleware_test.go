@@ -18,7 +18,6 @@ func TestJwtMiddleware(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, 200, w.Code)
-	//todo: test json schema
 }
 
 func TestJwtMiddlewareFail(t *testing.T) {
@@ -29,5 +28,4 @@ func TestJwtMiddlewareFail(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, 401, w.Code)
-	//todo: test json schema
 }

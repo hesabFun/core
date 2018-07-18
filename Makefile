@@ -28,3 +28,6 @@ migrate-all: migrate seed seed-test
 
 doc:
 	apidoc -c apidoc/config/ -o apidoc/build
+
+hi:
+	echo hi

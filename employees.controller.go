@@ -6,7 +6,7 @@ import (
 )
 
 /**
- * @api {post} /v1/companies/:id/employees/ Add User To Company
+ * @a pi {post} /v1/companies/:id/employees/ Add User To Company
  * @apiName AddUserToCompany
  * @apiGroup Employees
  * @apiVersion 0.1.0

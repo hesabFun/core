@@ -28,7 +28,22 @@ func TestInsertNewTransaction(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, 201, w.Code)
-	//todo: test json schema
+}
+
+func TestInsertNewTransactionFailed(t *testing.T) {
+	router := setupRouter()
+	w := httptest.NewRecorder()
+
+	jsonValue := `
+{
+}
+`
+
+	req, _ := http.NewRequest("POST", "/v1/companies/1/transactions", bytes.NewBuffer([]byte(jsonValue)))
+	req.Header.Add("Authorization", "Bearer "+os.Getenv("JWT_TEST_TOKEN"))
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, 400, w.Code)
 }
 
 func TestGetAllTransactions(t *testing.T) {
@@ -40,5 +55,4 @@ func TestGetAllTransactions(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, 200, w.Code)
-	//todo: test json schema
 }
