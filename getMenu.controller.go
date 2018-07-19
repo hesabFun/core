@@ -36,8 +36,6 @@ func getMenu(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"menu": menu,
-	})
+	c.JSON(200, menu)
 	return
 }
