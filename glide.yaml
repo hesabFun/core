@@ -1,31 +1,23 @@
 package: github.com/hesabFun/core
-homepage: https://hesabfun.com
-
-owners:
-- name: ErFUN KH
-  email: erfun.kh@gmail.com
-  homepage: https://erfun.net
-
 import:
+- package: github.com/SermoDigital/jose
+  subpackages:
+  - crypto
+  - jws
+- package: github.com/gin-contrib/cors
 - package: github.com/gin-gonic/gin
   version: ~1.2.0
-
-# testing package
-- package: github.com/stretchr/testify
-- package: github.com/xeipuuv/gojsonschema
-
-# ORM
-- package: github.com/go-sql-driver/mysql
-- package: upper.io/db.v3/mysql
-
-# Load environment variables from `.env` file
+  subpackages:
+  - binding
 - package: github.com/joho/godotenv
-
-# JWT
-- package: github.com/SermoDigital/jose
-
-# validator v9
+  subpackages:
+  - autoload
 - package: gopkg.in/go-playground/validator.v9
-
-# CORS
-- package: github.com/gin-contrib/cors
+- package: upper.io/db.v3
+  subpackages:
+  - lib/sqlbuilder
+  - mysql
+testImport:
+- package: github.com/stretchr/testify
+  subpackages:
+  - assert
