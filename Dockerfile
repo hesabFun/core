@@ -1,20 +1,15 @@
-FROM alpine:3.6
+FROM instrumentisto/glide
 
-RUN mkdir -p /app
-WORKDIR /app
+RUN apk add --update gcc go git mercurial libc-dev
+RUN go get -v github.com/rubenv/sql-migrate/...
+RUN mkdir -p /go/src/github.com/hesabFun/core
+WORKDIR /go/src/github.com/hesabFun/core
+COPY . /go/src/github.com/hesabFun/core
+COPY glide.yaml .
+RUN glide update
+RUN glide install 
 
-COPY ./core .
-COPY ./sql-migrate .
-COPY ./migrations .
-COPY ./seeds .
-COPY ./dbconfig.yml .
-#COPY ./run .
-
-#RUN chmod +x ./run
-
+RUN go build
 EXPOSE 8080
 
-CMD ["./sql-migrate up", "./sql-migrate up -env=seed", "./core"]
-
-# Specify the default user for the Docker image to run as.
-USER 1001
+ENTRYPOINT ["sh", "/go/src/github.com/hesabFun/core/run.sh"]
