@@ -14,7 +14,7 @@ COPY ./dbconfig.yml .
 
 EXPOSE 8080
 
-ENTRYPOINT ["./sql-migrate up", "./sql-migrate up -env=seed", "./core"]
+ENTRYPOINT ["sh", "/app/run.sh"]
 
 # Specify the default user for the Docker image to run as.
 #USER 1001
