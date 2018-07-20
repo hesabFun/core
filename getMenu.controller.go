@@ -16,8 +16,9 @@ func getMenu(c *gin.Context) {
 	loginUser := c.MustGet("user").(LoginUser)
 
 	type Menu struct {
-		Alias string `db:"alias"`
-		Path  string `db:"path"`
+		ID    uint   `db:"id" json:"id"`
+		Alias string `db:"alias" json:"alias"`
+		Path  string `db:"path" json:"path"`
 	}
 
 	var menu []Menu
