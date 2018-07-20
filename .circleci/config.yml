@@ -64,18 +64,18 @@ jobs:
     working_directory: /go/src/github.com/hesabFun/core
     steps:
       - checkout
-      - run: curl https://glide.sh/get | sh
-      - run: glide install
-      - run: cp -r .env.example .env
-      - run: go build
-      - run: go get github.com/rubenv/sql-migrate/...
-      - run: cp /go/bin/sql-migrate .
-
       # build and push Docker image
       - setup_remote_docker
       - run:
           name: build and push Docker image
           command: |
+            curl https://glide.sh/get | sh
+            glide install
+            cp -r .env.example .env
+            go build
+            go get github.com/rubenv/sql-migrate/...
+            cp /go/bin/sql-migrate .
+
             TAG=0.1.$CIRCLE_BUILD_NUM
             docker build -t hesabfun/core:$TAG .
             docker tag hesabfun/core:$TAG hesabfun/core:latest
