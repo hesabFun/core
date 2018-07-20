@@ -3,12 +3,12 @@ FROM alpine:3.6
 RUN mkdir -p /app
 WORKDIR /app
 
-COPY ./core .
-COPY ./sql-migrate .
-COPY ./migrations .
-COPY ./seeds .
-COPY ./dbconfig.yml .
-COPY ./run.sh .
+COPY ./core /app
+COPY ./sql-migrate /app
+COPY ./migrations /app
+COPY ./seeds /app
+COPY ./dbconfig.yml /app
+COPY ./run.sh /app
 
 #RUN chmod +x ./run
 
