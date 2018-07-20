@@ -72,8 +72,8 @@ jobs:
             curl https://glide.sh/get | sh
             glide install
             cp -r .env.example .env
-            go build
-            go get github.com/rubenv/sql-migrate/...
+            GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build
+            GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go get github.com/rubenv/sql-migrate/...
             cp /go/bin/sql-migrate .
 
             TAG=0.1.$CIRCLE_BUILD_NUM
