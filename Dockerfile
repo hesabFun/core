@@ -8,7 +8,7 @@ COPY ./sql-migrate .
 COPY ./migrations .
 COPY ./seeds .
 COPY ./dbconfig.yml .
-#COPY ./run .
+COPY ./run.sh .
 
 #RUN chmod +x ./run
 
