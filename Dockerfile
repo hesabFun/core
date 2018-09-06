@@ -14,7 +14,7 @@ COPY ./run.sh /app
 
 EXPOSE 8080
 
-ENTRYPOINT ["sh", "/app/run.sh"]
+CMD ["sh", "/app/run.sh"]
 
 # Specify the default user for the Docker image to run as.
 #USER 1001
