@@ -83,6 +83,30 @@ jobs:
             docker push hesabfun/core:$TAG
             docker push hesabfun/core:latest
 
+  # Docs
+  docs:
+    docker:
+      # specify the version
+      - image: node:latest
+    working_directory: /go/src/github.com/hesabFun/core/
+    steps:
+      - checkout
+      - run: npm install apidoc -g
+      - run: apidoc -c apidoc/config/ -o apidoc/build
+
+      # build and push Docker image
+      - setup_remote_docker
+      - run:
+          name: build and push Docs Docker image
+          command: |
+            cd apidoc
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker build -t hesabfun/docs:$TAG .
+            docker tag hesabfun/docs:$TAG hesabfun/docs:latest
+            docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+            docker push hesabfun/core:$TAG
+            docker push hesabfun/core:latest
+
 # Check https://circleci.com/docs/2.0/workflows/ for more details
 workflows:
   version: 2
@@ -90,8 +114,11 @@ workflows:
     jobs:
       - test
       - build:
-          requires:
-            - test
+        requires:
+          - test
       - deploy:
-          requires:
-            - build
+        requires:
+          - build
+      - docs:
+        requires:
+          - build
