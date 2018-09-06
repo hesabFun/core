@@ -104,8 +104,8 @@ jobs:
             docker build -t hesabfun/docs:$TAG .
             docker tag hesabfun/docs:$TAG hesabfun/docs:latest
             docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
-            docker push hesabfun/core:$TAG
-            docker push hesabfun/core:latest
+            docker push hesabfun/docs:$TAG
+            docker push hesabfun/docs:latest
 
 # Check https://circleci.com/docs/2.0/workflows/ for more details
 workflows:
