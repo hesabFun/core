@@ -10,11 +10,6 @@ COPY ./seeds /app/seeds
 COPY ./dbconfig.yml /app
 COPY ./run.sh /app
 
-#RUN chmod +x ./run
-
-EXPOSE 8080
+EXPOSE 80
 
 CMD ["sh", "/app/run.sh"]
-
-# Specify the default user for the Docker image to run as.
-#USER 1001
