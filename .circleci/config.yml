@@ -87,7 +87,7 @@ jobs:
   docs:
     docker:
       # specify the version
-      - image: node:latest
+      - image: circleci/node:latest
     working_directory: /go/src/github.com/hesabFun/core/
     steps:
       - checkout
