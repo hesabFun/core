@@ -5,8 +5,8 @@ WORKDIR /app
 
 COPY ./core /app
 COPY ./sql-migrate /app
-COPY ./migrations /app
-COPY ./seeds /app
+COPY ./migrations /appmigrations
+COPY ./seeds /app/seeds
 COPY ./dbconfig.yml /app
 COPY ./run.sh /app
 
