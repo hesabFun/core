@@ -90,7 +90,6 @@ jobs:
       - image: circleci/node:latest
     working_directory: /go/src/github.com/hesabFun/core/
     steps:
-      - checkout
       - run: npm install apidoc -g
       - run: apidoc -c apidoc/config/ -o apidoc/build
 
