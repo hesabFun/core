@@ -4,7 +4,7 @@
   "description": "Free, open source and cross-platform finance application. ",
   "title": "HesabFun - Free, open source and cross-platform finance application. ",
   "url": "https://api.hesabfun.com",
-  "sampleUrl": "http://localhost:8080",
+  "sampleUrl": "https://api.hesabfun.com",
   "template": {
     "withCompare": true,
     "withGenerator": true
