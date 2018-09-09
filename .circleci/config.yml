@@ -95,6 +95,7 @@ jobs:
       - run: sh get-docker.sh
       - run: npm install apidoc -g
       - run: apidoc -c apidoc/config/ -o apidoc/build
+      - run: sed -i -e 's/: param/: JSON.stringify(param)/' apidoc/build/utils/send_sample_request.js
 
       # build and push Docker image
       - setup_remote_docker
