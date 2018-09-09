@@ -4,6 +4,7 @@ import (
 	"github.com/SermoDigital/jose/crypto"
 	"github.com/SermoDigital/jose/jws"
 	"github.com/gin-gonic/gin"
+	"io/ioutil"
 	"os"
 )
 
@@ -16,7 +17,14 @@ type LoginUser struct {
 
 func jwtAuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		rsaPublic, _ := crypto.ParseRSAPublicKeyFromPEM([]byte(os.Getenv("JWT_PUBLIC_KEY")))
+
+		keyBytes, err := ioutil.ReadFile(os.Getenv("JWT_RSA_PUBLIC_KEY_PATH"))
+		if err != nil {
+			respondWithError(401, err.Error(), c)
+			return
+		}
+
+		rsaPublic, _ := crypto.ParseRSAPublicKeyFromPEM([]byte(keyBytes))
 		jwt, err := jws.ParseJWTFromRequest(c.Request)
 		if err != nil {
 			respondWithError(401, err.Error(), c)

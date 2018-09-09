@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 
+	"io/ioutil"
 	"os"
 	"strconv"
 	"time"
@@ -55,6 +56,11 @@ func loginController(c *gin.Context) {
 
 func generateToken(user User) (string, error) {
 
+	keyBytes, err := ioutil.ReadFile(os.Getenv("JWT_RSA_PRIVATE_KEY_PATH"))
+	if err != nil {
+		return "", err
+	}
+
 	claims := jws.Claims{
 		"user": struct {
 			Name   string `json:"name"`
@@ -81,7 +87,7 @@ func generateToken(user User) (string, error) {
 	claims.SetSubject(strconv.FormatUint(uint64(user.ID), 10)) // set user id
 	claims.SetJWTID("123")                                     // set token id
 
-	rsaPrivate, err := crypto.ParseRSAPrivateKeyFromPEM([]byte(os.Getenv("JWT_PRIVATE_KEY")))
+	rsaPrivate, err := crypto.ParseRSAPrivateKeyFromPEM([]byte(keyBytes))
 
 	if err != nil {
 		return "", err
