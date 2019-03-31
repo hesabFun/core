@@ -24,7 +24,12 @@ func jwtAuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		rsaPublic, _ := crypto.ParseRSAPublicKeyFromPEM([]byte(keyBytes))
+		rsaPublic, err := crypto.ParseRSAPublicKeyFromPEM([]byte(keyBytes))
+		if err != nil {
+			respondWithError(401, err.Error(), c)
+			return
+		}
+
 		jwt, err := jws.ParseJWTFromRequest(c.Request)
 		if err != nil {
 			respondWithError(401, err.Error(), c)
