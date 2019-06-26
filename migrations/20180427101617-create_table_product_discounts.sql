@@ -1,19 +1,28 @@
 -- +migrate Up
-CREATE TABLE `product_discounts` (
-  `id`         INT(11) UNSIGNED         NOT NULL AUTO_INCREMENT,
-  `product_id` INT(11) UNSIGNED         NOT NULL,
-  `discount`   INT(11)                  NOT NULL,
-  `type`       ENUM ('percent', 'cash') NOT NULL DEFAULT 'percent',
-  `start_date` TIMESTAMP                NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `end_date`   TIMESTAMP                NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
-  KEY `product discount` (`product_id`),
-  CONSTRAINT `product discount` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION
-)
-  ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+CREATE SEQUENCE public.product_discounts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE public.product_discounts_id_seq
+    OWNER TO postgres;
+
+CREATE TABLE public.product_discounts
+(
+    id         bigint DEFAULT nextval('public.product_discounts_id_seq'::regclass) PRIMARY KEY NOT NULL,
+    product_id bigint                                                                          NOT NULL,
+    discount   bigint                                                                          NOT NULL,
+    start_date timestamp with time zone,
+    end_date   timestamp with time zone,
+
+    CONSTRAINT "product discounts" FOREIGN KEY (product_id) REFERENCES public.products (id) ON DELETE CASCADE
+);
+ALTER TABLE public.product_discounts
+    OWNER TO postgres;
+
+CREATE INDEX idx_product_discounts_product_id ON public.product_discounts USING btree (product_id);
 
 -- +migrate Down
-DROP TABLE `product_discounts`;
+DROP TABLE public.product_discounts;
+DROP SEQUENCE public.product_discounts_id_seq;

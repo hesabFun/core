@@ -1,19 +1,29 @@
 -- +migrate Up
-CREATE TABLE `product_categories` (
-  `id`         INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `company_id` INT(11) UNSIGNED          DEFAULT NULL,
-  `parent_id`  INT(11) UNSIGNED          DEFAULT 0,
-  `name`       VARCHAR(64)      NOT NULL DEFAULT '',
-  `order`      INT(11)          NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  KEY `company_id` (`company_id`),
-  KEY `parent` (`parent_id`),
-  CONSTRAINT `company categories` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION
-)
-  ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+CREATE SEQUENCE public.product_categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE public.product_categories_id_seq
+    OWNER TO postgres;
+
+CREATE TABLE public.product_categories
+(
+    id         bigint                DEFAULT nextval('public.product_categories_id_seq'::regclass) PRIMARY KEY NOT NULL,
+    company_id bigint,
+    parent_id  bigint                DEFAULT '0'::bigint,
+    name       character varying(64) DEFAULT ''::character varying                                             NOT NULL,
+    "order"    bigint                DEFAULT '0'::bigint                                                       NOT NULL,
+
+    CONSTRAINT "company categories" FOREIGN KEY (company_id) REFERENCES public.companies (id) ON DELETE CASCADE
+);
+ALTER TABLE public.product_categories
+    OWNER TO postgres;
+
+CREATE INDEX idx_product_categories_company_id ON public.product_categories USING btree (company_id);
+CREATE INDEX idx_product_categories_parent_id ON public.product_categories USING btree (parent_id);
 
 -- +migrate Down
-DROP TABLE `product_categories`;
+DROP TABLE public.product_categories;
+DROP SEQUENCE public.product_categories_id_seq;

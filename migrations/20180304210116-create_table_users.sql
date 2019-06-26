@@ -1,21 +1,64 @@
 -- +migrate Up
-CREATE TABLE `users` (
-  `id`             INT(11) UNSIGNED                    NOT NULL AUTO_INCREMENT,
-  `name`           VARCHAR(255)                        NOT NULL DEFAULT '',
-  `email`          VARCHAR(255)                        NOT NULL DEFAULT '',
-  `mobile`         VARCHAR(255)                        NOT NULL DEFAULT '',
-  `password`       VARCHAR(255)                                 DEFAULT '',
-  `status`         ENUM ('pending', 'active', 'block') NOT NULL DEFAULT 'pending',
-  `type`           ENUM ('user', 'admin', 'god')       NOT NULL DEFAULT 'user',
-  `remember_token` VARCHAR(255)                                 DEFAULT '',
-  `sms_token`      INT(11)                                      DEFAULT NULL,
-  `created_at`     TIMESTAMP                           NOT NULL DEFAULT current_timestamp(),
-  `deleted_at`     TIMESTAMP                           NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`, `mobile`)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+SET default_with_oids = false;
+
+-- CREATE SCHEMA public;
+-- ALTER SCHEMA public OWNER TO postgres;
+
+CREATE TYPE public.users_status AS ENUM (
+    'pending',
+    'active',
+    'block'
+    );
+ALTER TYPE public.users_status OWNER TO postgres;
+
+CREATE TYPE public.users_type AS ENUM (
+    'user',
+    'admin',
+    'god'
+    );
+ALTER TYPE public.users_type OWNER TO postgres;
+
+CREATE SEQUENCE public.users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE public.users_id_seq
+    OWNER TO postgres;
+
+CREATE TABLE public.users
+(
+    id             bigint                   DEFAULT nextval('public.users_id_seq'::regclass) PRIMARY KEY NOT NULL,
+    name           character varying(255)   DEFAULT '':: character varying                               NOT NULL,
+    email          character varying(255)   DEFAULT '':: character varying UNIQUE,
+    mobile         character varying(255)   DEFAULT '':: character varying UNIQUE,
+    password       character varying(255)   DEFAULT '':: character varying,
+    status         public.users_status      DEFAULT 'pending'::public.users_status                       NOT NULL,
+    type           public.users_type        DEFAULT 'user'::public.users_type                            NOT NULL,
+    remember_token character varying(255)   DEFAULT '':: character varying,
+    sms_token      bigint,
+    created_at     timestamp with time zone DEFAULT now()                                                NOT NULL,
+    deleted_at     timestamp with time zone
+);
+ALTER TABLE public.users
+    OWNER TO postgres;
+
+CREATE UNIQUE INDEX idx_users_email_mobile_name ON public.users USING btree (email, mobile, name);
 
 -- +migrate Down
-DROP TABLE `users`;
+DROP TABLE public.users;
+DROP TYPE public.users_type;
+DROP TYPE public.users_status;
+DROP SEQUENCE public.users_id_seq;
