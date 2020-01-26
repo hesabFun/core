@@ -1,5 +1,5 @@
-vendor
+*.cp
+.vagrant
+/tmp/*
+.#*
 .idea
-core
-.env
-apidoc/build

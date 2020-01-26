@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package types;
+
+option go_package = "typespb";
+option java_multiple_files = true;
+option java_outer_classname = "TypeProto";
+option java_package = "com.types";
+
+message Timestamp {
+    int64 unix = 1;
+    bool valid = 2;
+}
+
+message JSONArray {
+    repeated string data = 1;
+}
+
+message JSONMap {
+    map<string, string> data = 1;
+}
+
+message NullString {
+    string string = 1;
+    bool valid = 2;
+}
+
+message NullInt64 {
+    int64 int64 = 1;
+    bool valid = 2;
+}

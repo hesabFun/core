@@ -1,0 +1,99 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "modules/misc/proto/misc.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/misc/health": {
+      "get": {
+        "operationId": "Health",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/miscHealthResponse"
+            }
+          }
+        },
+        "tags": [
+          "MiscSystem"
+        ]
+      }
+    },
+    "/v1/misc/pubkey": {
+      "get": {
+        "operationId": "PublicKey",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/miscPubKeyResponse"
+            }
+          }
+        },
+        "tags": [
+          "MiscSystem"
+        ]
+      }
+    },
+    "/v1/misc/version": {
+      "get": {
+        "operationId": "Version",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/miscVersionResponse"
+            }
+          }
+        },
+        "tags": [
+          "MiscSystem"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "miscHealthResponse": {
+      "type": "object"
+    },
+    "miscPubKeyResponse": {
+      "type": "object",
+      "properties": {
+        "pub": {
+          "type": "string"
+        }
+      }
+    },
+    "miscVersionResponse": {
+      "type": "object",
+      "properties": {
+        "commit_hash": {
+          "type": "string"
+        },
+        "short_hash": {
+          "type": "string"
+        },
+        "build_date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "commit_date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "count": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    }
+  }
+}

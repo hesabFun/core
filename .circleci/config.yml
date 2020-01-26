@@ -3,128 +3,19 @@
 # Check https://circleci.com/docs/2.0/language-go/ for more details
 version: 2
 jobs:
-  # build
   build:
     docker:
       # specify the version
-      - image: circleci/golang:latest
-    working_directory: /go/src/github.com/hesabFun/core
-    steps:
-      - checkout
-      - run: curl https://glide.sh/get | sh
-      - run: glide install
-      - run: cp -r .env.example .env
-      - run: go build
-
-  # test
-  test:
-    docker:
-      # specify the version
-      - image: circleci/golang:latest
+      - image: circleci/golang:1.13
+      - image: circleci/postgres:11-alpine
         environment:
-          - MYSQL_ADDRESS=localhost
-          - MYSQL_DATABASE=hesab_fun
-          - MYSQL_USERNAME=root
-          - MYSQL_PASSWORD=123456
-          - MYSQL_PORT=3306
-      - image: mariadb:latest
-        environment:
-          - MYSQL_DATABASE=hesab_fun
-          - MYSQL_ROOT_PASSWORD=123456
+          POSTGRES_USER: engine_test
+          POSTGRES_PASSWORD: bita123
+          POSTGRES_DB: engine_test
+      - image:  circleci/redis:latest
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
-    #### TEMPLATE_NOTE: go expects specific checkout path representing url
-    #### expecting it in the form of
-    ####   /go/src/github.com/circleci/go-tool
-    ####   /go/src/bitbucket.org/circleci/go-tool
-    working_directory: /go/src/github.com/hesabFun/core
+    working_directory: /go/src/elbix.dev/engine
     steps:
       - checkout
-
-      # specify any bash command here prefixed with `run: `
-      - run: curl https://glide.sh/get | sh
-      - run: glide install
-      - run: go get github.com/rubenv/sql-migrate/...
-      - run: sql-migrate up
-      - run: sql-migrate up -env=seed
-      - run: sql-migrate up -env=test
-      - run: cp -r .env.example .env
-      - run: go test -v ./...  -race -coverprofile=coverage.txt -covermode=atomic
-      - run: bash <(curl -s https://codecov.io/bash) -t ${CODECOV_TOKEN}
-
-  # deploy
-  deploy:
-    docker:
-      # specify the version
-      - image: circleci/golang:latest
-    working_directory: /go/src/github.com/hesabFun/core
-    steps:
-      - checkout
-      - run: curl https://glide.sh/get | sh
-      - run: glide install
-      - run: cp -r .env.example .env
-      - run: GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build
-      - run: GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go get github.com/rubenv/sql-migrate/...
-      - run: cp /go/bin/sql-migrate .
-
-      # build and push Docker image
-      - setup_remote_docker
-      - run:
-          name: build and push Docker image
-          command: |
-            TAG=0.1.$CIRCLE_BUILD_NUM
-            docker build -t hesabfun/core:$TAG .
-            docker tag hesabfun/core:$TAG hesabfun/core:latest
-            docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
-            docker push hesabfun/core:$TAG
-            docker push hesabfun/core:latest
-
-  # Docs
-  docs:
-    docker:
-      # specify the version
-      - image: node:latest
-    working_directory: /go/src/github.com/hesabFun/core/
-    steps:
-      - checkout
-      - run: curl -fsSL get.docker.com -o get-docker.sh
-      - run: sh get-docker.sh
-      - run: npm install apidoc -g
-      - run:
-          name: build Docs
-          command: |
-            apidoc -c apidoc/config/ -o apidoc/build
-            sed -i -e 's/: param/: JSON.stringify(param)/' apidoc/build/utils/send_sample_request.js
-
-      # build and push Docker image
-      - setup_remote_docker
-      - run:
-          name: push Docs Docker image
-          command: |
-            cd apidoc
-            TAG=0.1.$CIRCLE_BUILD_NUM
-            docker build -t hesabfun/docs:$TAG .
-            docker tag hesabfun/docs:$TAG hesabfun/docs:latest
-            docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
-            docker push hesabfun/docs:$TAG
-            docker push hesabfun/docs:latest
-
-# Check https://circleci.com/docs/2.0/workflows/ for more details
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - test
-      - build:
-          requires:
-            - test
-      - deploy:
-          requires:
-            - build
-      - docs:
-          requires:
-            - build
+      - run: make lint
+      - run: make test

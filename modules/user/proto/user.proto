@@ -1,0 +1,213 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "userpb";
+option java_multiple_files = true;
+option java_outer_classname = "UserProto";
+option java_package = "com.user";
+
+import "github.com/fzerorubigd/protobuf/extra/extra.proto";
+import "github.com/fzerorubigd/protobuf/types/type.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+option (extra.schema_name_all) = "aaa";
+
+enum UserStatus {
+    USER_STATUS_INVALID = 0;
+    USER_STATUS_REGISTERED = 1;
+    USER_STATUS_ACTIVE = 2;
+    USER_STATUS_BANNED = 3;
+}
+
+message User {
+    option (extra.is_model) = true;
+    option (extra.table_name) = "users";
+    int64 id = 1 [(gogoproto.moretags) = "db:\"id\" "];
+    string email = 2 [(gogoproto.moretags) = "db:\"email\" "];
+    string display_name = 3 [(gogoproto.moretags) = "db:\"display_name\" "];
+    string password = 4 [(gogoproto.moretags) = "db:\"password\" "];
+    UserStatus status = 5 [(gogoproto.moretags) = "db:\"status\" "];
+    types.Timestamp created_at = 6 [(gogoproto.moretags) = "db:\"created_at\" "];
+    types.Timestamp updated_at = 7 [(gogoproto.moretags) = "db:\"updated_at\" "];
+    types.Timestamp last_login = 8 [(gogoproto.moretags) = "db:\"last_login\" "];
+    types.Timestamp change_pass_at = 9 [(gogoproto.moretags) = "db:\"change_pass_at\" "];
+}
+
+message UserResponse {
+    int64 id = 1;
+    string display_name = 2;
+    string token = 3;
+    UserStatus status = 4;
+    bool change_password = 5;
+}
+
+message LoginRequest {
+    string email = 1 [(gogoproto.moretags) = "validate:\"email,required\" "];
+    string password = 2 [(gogoproto.moretags) = "validate:\"gte=6,required\" "];
+}
+
+message LogoutRequest {
+}
+
+message LogoutResponse {
+}
+
+message RegisterRequest {
+    string email = 1 [(gogoproto.moretags) = "validate:\"email,required\" "];
+    string display_name = 2 [(gogoproto.moretags) = "validate:\"gte=3,required\" "];
+    string password = 3 [(gogoproto.moretags) = "validate:\"gte=6,required\" "];
+}
+
+message PingRequest {
+}
+
+message ChangePasswordRequest {
+    string old_password = 1;
+    string new_password = 2 [(gogoproto.moretags) = "validate:\"gte=6,required\" "];
+}
+
+message ChangePasswordResponse {
+}
+
+message ChangeDisplayNameRequest {
+    string display_name = 1 [(gogoproto.moretags) = "validate:\"gte=3,required\" "];
+}
+
+message ChangeDisplayNameResponse {
+}
+
+message ForgotPasswordRequest {
+    string email = 1 [(gogoproto.moretags) = "validate:\"email,required\" "];
+}
+
+message ForgotPasswordResponse {
+}
+
+message VerifyTokenRequest {
+    string token_id = 1 [(gogoproto.moretags) = "validate:\"required\" "];
+}
+
+service UserSystem {
+    rpc Login (LoginRequest) returns (UserResponse) {
+        option (google.api.http) = {
+      post: "/v1/user/login"
+      body: "*"
+    };
+    }
+
+    rpc Logout (LogoutRequest) returns (LogoutResponse) {
+        option (google.api.http) = {
+      get: "/v1/user/logout"
+    };
+        option (extra.resource) = "";
+        option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+            security: {
+                security_requirement: {
+                    key: "Authentication"
+                    value: {}
+    }
+}
+}
+;
+}
+
+rpc
+Register
+(
+RegisterRequest
+)
+returns
+(
+UserResponse
+)
+{
+option (google.api.http) = {
+      post: "/v1/user/register"
+      body: "*"
+    };
+}
+
+rpc
+Ping
+(
+PingRequest
+)
+returns
+(
+UserResponse
+)
+{
+option (google.api.http) = {
+      get: "/v1/user/ping"
+    };
+option (extra.resource) = "";
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        security: {
+            security_requirement: {
+                key: "Authentication"
+                value: {}
+            }
+        }
+};
+}
+
+rpc VerifyToken(VerifyTokenRequest) returns (UserResponse) {
+option (google.api.http) = {
+      post: "/v1/user/verify"
+      body: "*"
+    };
+}
+
+
+rpc
+ChangePassword
+(
+ChangePasswordRequest
+)
+returns
+(
+ChangePasswordResponse
+)
+{
+option (google.api.http) = {
+      post: "/v1/user/change/password"
+      body: "*"
+    };
+option (extra.resource) = "";
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        security: {
+            security_requirement: {
+                key: "Authentication"
+                value: {}
+            }
+        }
+};
+}
+
+rpc ChangeDisplayName(ChangeDisplayNameRequest) returns (ChangeDisplayNameResponse) {
+option (google.api.http) = {
+      post: "/v1/user/change/displayname"
+      body: "*"
+    };
+option (extra.resource) = "";
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        security: {
+            security_requirement: {
+                key: "Authentication"
+                value: {}
+            }
+        }
+};
+}
+
+rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse) {
+option (google.api.http) = {
+        post: "/v1/user/forgot"
+        body: "*"
+    };
+}
+
+}
