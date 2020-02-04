@@ -2,6 +2,7 @@ package jwt
 
 import (
 	"crypto/rsa"
+	"github.com/dgrijalva/jwt-go"
 	"time"
 
 	"elbix.dev/engine/pkg/token"

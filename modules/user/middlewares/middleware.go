@@ -2,6 +2,8 @@ package middlewares
 
 import (
 	"context"
+	userpb "elbix.dev/engine/modules/user/proto"
+	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
 	"net/http"
 	"strings"
 
@@ -102,7 +104,7 @@ func init() {
 		Stream: nil, // TODO : Stream?
 	})
 	grpcgw.RegisterInterceptors(grpcgw.Interceptor{
-		Stream: grpc_auth.StreamServerInterceptor(auth),
 		Unary:  grpc_auth.UnaryServerInterceptor(auth),
+		Stream: grpc_auth.StreamServerInterceptor(auth),
 	})
 }

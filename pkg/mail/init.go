@@ -3,6 +3,7 @@ package mail
 import (
 	"context"
 	"encoding/json"
+	"gopkg.in/gomail.v2"
 
 	"elbix.dev/engine/pkg/assert"
 	"elbix.dev/engine/pkg/config"

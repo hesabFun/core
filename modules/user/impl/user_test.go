@@ -2,6 +2,7 @@ package impl
 
 import (
 	"context"
+	userpb "elbix.dev/engine/modules/user/proto"
 	"net/http"
 	"testing"
 
@@ -80,7 +81,6 @@ func TestUserController_Register_Invalid(t *testing.T) {
 	gErr = err.(grpcgw.GWError)
 	assert.Nil(t, gErr.Fields())
 	assert.Equal(t, http.StatusBadRequest, gErr.Status())
-
 }
 
 func TestUserController_Register(t *testing.T) {
