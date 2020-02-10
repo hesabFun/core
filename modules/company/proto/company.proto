@@ -43,9 +43,7 @@ message GetCompanyResponse {
 }
 
 message CreateCompanyRequest {
-    int64 id = 1;
-    string name = 2;
-    CompanyStatus status = 3;
+    string name = 1;
 }
 
 message CreateCompanyResponse {
