@@ -7,6 +7,8 @@ import (
 	_ "elbix.dev/engine/modules/user"
 	// misc mod
 	_ "elbix.dev/engine/modules/misc"
+	// company mod
+	_ "elbix.dev/engine/modules/company"
 	"elbix.dev/engine/pkg/config"
 	"elbix.dev/engine/pkg/grpcgw"
 )
@@ -16,6 +18,7 @@ var (
 	mods       = []func() (grpcgw.Controller, error){
 		userMod,
 		miscMod,
+		companyMod,
 	}
 )
 

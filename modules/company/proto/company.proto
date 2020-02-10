@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package company;
+
+option go_package = "companypb";
+option java_multiple_files = true;
+option java_outer_classname = "CompanyProto";
+option java_package = "com.company";
+
+import "github.com/fzerorubigd/protobuf/extra/extra.proto";
+import "github.com/fzerorubigd/protobuf/types/type.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+enum CompanyStatus {
+    COMPANY_STATUS_INVALID = 0;
+    COMPANY_STATUS_PENDING = 1;
+    COMPANY_STATUS_ACTIVE = 2;
+    COMPANY_STATUS_BANNED = 3;
+}
+
+option (extra.schema_name_all) = "aaa";
+
+message Company {
+    option (extra.is_model) = true;
+    option (extra.table_name) = "companies";
+    int64 id = 1 [(gogoproto.moretags) = "db:\"id\" "];
+    string name = 2 [(gogoproto.moretags) = "db:\"name\" "];
+    CompanyStatus status = 3 [(gogoproto.moretags) = "db:\"status\" "];
+    types.Timestamp created_at = 4 [(gogoproto.moretags) = "db:\"created_at\" "];
+    types.Timestamp updated_at = 5 [(gogoproto.moretags) = "db:\"updated_at\" "];
+}
+
+message GetCompanyRequest {
+    int64 id = 1;
+}
+
+message GetCompanyResponse {
+    int64 id = 1;
+    string name = 2;
+    CompanyStatus status = 3;
+}
+
+message CreateCompanyRequest {
+    int64 id = 1;
+    string name = 2;
+    CompanyStatus status = 3;
+}
+
+message CreateCompanyResponse {
+    int64 id = 1;
+    string name = 2;
+    CompanyStatus status = 3;
+}
+
+service CompanyService {
+    rpc GetCompany (GetCompanyRequest) returns (GetCompanyResponse) {
+        option (google.api.http) = {
+      get: "/v1/companies/{id}"
+    };
+        option (extra.resource) = "";
+        option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+            security: {
+                security_requirement: {
+                    key: "Authentication"
+                    value: {}
+    }
+}
+}
+;
+}
+
+rpc
+CreateCompany
+(
+CreateCompanyRequest
+)
+returns
+(
+CreateCompanyResponse
+)
+{
+option (google.api.http) = {
+      post: "/v1/companies"
+      body: "*"
+    };
+option (extra.resource) = "";
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+    security: {
+        security_requirement: {
+            key: "Authentication"
+            value: {}
+}
+}
+}
+;
+}
+
+}

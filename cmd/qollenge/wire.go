@@ -3,6 +3,7 @@
 package qollenge
 
 import (
+	"elbix.dev/engine/modules/company"
 	"elbix.dev/engine/modules/misc"
 	"elbix.dev/engine/modules/user"
 	"elbix.dev/engine/pkg/grpcgw"
@@ -15,4 +16,8 @@ func userMod() (grpcgw.Controller, error) {
 
 func miscMod() (grpcgw.Controller, error) {
 	panic(wire.Build(getPrivateKey, misc.MiscSet))
+}
+
+func companyMod() (grpcgw.Controller, error) {
+	panic(wire.Build(company.CompanySet))
 }

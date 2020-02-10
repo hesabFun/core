@@ -6,6 +6,8 @@
 package qollenge
 
 import (
+	impl3 "elbix.dev/engine/modules/company/impl"
+	"elbix.dev/engine/modules/company/proto"
 	impl2 "elbix.dev/engine/modules/misc/impl"
 	"elbix.dev/engine/modules/misc/proto"
 	"elbix.dev/engine/modules/user/impl"
@@ -16,6 +18,7 @@ import (
 )
 
 import (
+	_ "elbix.dev/engine/modules/company"
 	_ "elbix.dev/engine/modules/misc"
 	_ "elbix.dev/engine/modules/user"
 )
@@ -44,4 +47,10 @@ func miscMod() (grpcgw.Controller, error) {
 	miscSystemServer := impl2.NewMiscController(publicKey)
 	wrappedMiscSystemController := miscpb.NewWrappedMiscSystemServer(miscSystemServer)
 	return wrappedMiscSystemController, nil
+}
+
+func companyMod() (grpcgw.Controller, error) {
+	companyServiceServer := impl3.NewCompanyController()
+	wrappedCompanyServiceController := companypb.NewWrappedCompanyServiceServer(companyServiceServer)
+	return wrappedCompanyServiceController, nil
 }

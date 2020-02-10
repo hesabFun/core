@@ -14,6 +14,7 @@ CHMOD=$(shell which chmod)
 DOCKER=$(shell which docker)
 SSH=$(shell which ssh)
 DB_PASS?=$(DEFAULT_PASS)
+DB_PASS?=$(DEFAULT_PASS)
 DB_USER?=$(APP_NAME)
 DB_NAME?=$(APP_NAME)
 WORK_DIR=$(ROOT)/tmp

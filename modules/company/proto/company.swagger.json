@@ -1,0 +1,133 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "modules/company/proto/company.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/companies": {
+      "post": {
+        "operationId": "CreateCompany",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/companyCreateCompanyResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/companyCreateCompanyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CompanyService"
+        ],
+        "security": [
+          {
+            "Authentication": []
+          }
+        ]
+      }
+    },
+    "/v1/companies/{id}": {
+      "get": {
+        "operationId": "GetCompany",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/companyGetCompanyResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "CompanyService"
+        ],
+        "security": [
+          {
+            "Authentication": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "companyCompanyStatus": {
+      "type": "string",
+      "enum": [
+        "COMPANY_STATUS_INVALID",
+        "COMPANY_STATUS_PENDING",
+        "COMPANY_STATUS_ACTIVE",
+        "COMPANY_STATUS_BANNED"
+      ],
+      "default": "COMPANY_STATUS_INVALID"
+    },
+    "companyCreateCompanyRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/companyCompanyStatus"
+        }
+      }
+    },
+    "companyCreateCompanyResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/companyCompanyStatus"
+        }
+      }
+    },
+    "companyGetCompanyResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/companyCompanyStatus"
+        }
+      }
+    }
+  }
+}

@@ -14,7 +14,6 @@ CREATE TABLE aaa.users
     last_login timestamp with time zone,
     CONSTRAINT aaa_users_id_primary PRIMARY KEY (id),
     CONSTRAINT aaa_users_email_unique UNIQUE (email)
-
 );
 
 INSERT INTO aaa.users (email, password, status, created_at, updated_at, last_login)
