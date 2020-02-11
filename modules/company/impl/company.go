@@ -38,6 +38,6 @@ func (uc *companyController) GetCompany(ctx context.Context, rc *companypb.GetCo
 }
 
 // NewCompanyController return a grpc user controller
-func NewCompanyController() companypb.CompanyServiceServer {
+func NewCompanyController() companypb.CompanySystemServer {
 	return &companyController{}
 }

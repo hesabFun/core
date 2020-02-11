@@ -52,7 +52,7 @@ message CreateCompanyResponse {
     CompanyStatus status = 3;
 }
 
-service CompanyService {
+service CompanySystem {
     rpc GetCompany (GetCompanyRequest) returns (GetCompanyResponse) {
         option (google.api.http) = {
       get: "/v1/companies/{id}"

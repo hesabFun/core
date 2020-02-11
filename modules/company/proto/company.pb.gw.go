@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = descriptor.ForMessage
 
-func request_CompanyService_GetCompany_0(ctx context.Context, marshaler runtime.Marshaler, client CompanyServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_CompanySystem_GetCompany_0(ctx context.Context, marshaler runtime.Marshaler, client CompanySystemClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetCompanyRequest
 	var metadata runtime.ServerMetadata
 
@@ -58,7 +58,7 @@ func request_CompanyService_GetCompany_0(ctx context.Context, marshaler runtime.
 
 }
 
-func local_request_CompanyService_GetCompany_0(ctx context.Context, marshaler runtime.Marshaler, server CompanyServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_CompanySystem_GetCompany_0(ctx context.Context, marshaler runtime.Marshaler, server CompanySystemServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetCompanyRequest
 	var metadata runtime.ServerMetadata
 
@@ -85,7 +85,7 @@ func local_request_CompanyService_GetCompany_0(ctx context.Context, marshaler ru
 
 }
 
-func request_CompanyService_CreateCompany_0(ctx context.Context, marshaler runtime.Marshaler, client CompanyServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_CompanySystem_CreateCompany_0(ctx context.Context, marshaler runtime.Marshaler, client CompanySystemClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateCompanyRequest
 	var metadata runtime.ServerMetadata
 
@@ -102,7 +102,7 @@ func request_CompanyService_CreateCompany_0(ctx context.Context, marshaler runti
 
 }
 
-func local_request_CompanyService_CreateCompany_0(ctx context.Context, marshaler runtime.Marshaler, server CompanyServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_CompanySystem_CreateCompany_0(ctx context.Context, marshaler runtime.Marshaler, server CompanySystemServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateCompanyRequest
 	var metadata runtime.ServerMetadata
 
@@ -119,12 +119,12 @@ func local_request_CompanyService_CreateCompany_0(ctx context.Context, marshaler
 
 }
 
-// RegisterCompanyServiceHandlerServer registers the http handlers for service CompanyService to "mux".
-// UnaryRPC     :call CompanyServiceServer directly.
+// RegisterCompanySystemHandlerServer registers the http handlers for service CompanySystem to "mux".
+// UnaryRPC     :call CompanySystemServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-func RegisterCompanyServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server CompanyServiceServer) error {
+func RegisterCompanySystemHandlerServer(ctx context.Context, mux *runtime.ServeMux, server CompanySystemServer) error {
 
-	mux.Handle("GET", pattern_CompanyService_GetCompany_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_CompanySystem_GetCompany_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -133,18 +133,18 @@ func RegisterCompanyServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CompanyService_GetCompany_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CompanySystem_GetCompany_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CompanyService_GetCompany_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CompanySystem_GetCompany_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_CompanyService_CreateCompany_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CompanySystem_CreateCompany_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -153,23 +153,23 @@ func RegisterCompanyServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CompanyService_CreateCompany_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CompanySystem_CreateCompany_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CompanyService_CreateCompany_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CompanySystem_CreateCompany_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterCompanyServiceHandlerFromEndpoint is same as RegisterCompanyServiceHandler but
+// RegisterCompanySystemHandlerFromEndpoint is same as RegisterCompanySystemHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterCompanyServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterCompanySystemHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -189,23 +189,23 @@ func RegisterCompanyServiceHandlerFromEndpoint(ctx context.Context, mux *runtime
 		}()
 	}()
 
-	return RegisterCompanyServiceHandler(ctx, mux, conn)
+	return RegisterCompanySystemHandler(ctx, mux, conn)
 }
 
-// RegisterCompanyServiceHandler registers the http handlers for service CompanyService to "mux".
+// RegisterCompanySystemHandler registers the http handlers for service CompanySystem to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterCompanyServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterCompanyServiceHandlerClient(ctx, mux, NewCompanyServiceClient(conn))
+func RegisterCompanySystemHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterCompanySystemHandlerClient(ctx, mux, NewCompanySystemClient(conn))
 }
 
-// RegisterCompanyServiceHandlerClient registers the http handlers for service CompanyService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "CompanyServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "CompanyServiceClient"
+// RegisterCompanySystemHandlerClient registers the http handlers for service CompanySystem
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "CompanySystemClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "CompanySystemClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "CompanyServiceClient" to call the correct interceptors.
-func RegisterCompanyServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client CompanyServiceClient) error {
+// "CompanySystemClient" to call the correct interceptors.
+func RegisterCompanySystemHandlerClient(ctx context.Context, mux *runtime.ServeMux, client CompanySystemClient) error {
 
-	mux.Handle("GET", pattern_CompanyService_GetCompany_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_CompanySystem_GetCompany_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -214,18 +214,18 @@ func RegisterCompanyServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CompanyService_GetCompany_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CompanySystem_GetCompany_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CompanyService_GetCompany_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CompanySystem_GetCompany_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_CompanyService_CreateCompany_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CompanySystem_CreateCompany_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -234,14 +234,14 @@ func RegisterCompanyServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CompanyService_CreateCompany_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CompanySystem_CreateCompany_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CompanyService_CreateCompany_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CompanySystem_CreateCompany_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -249,13 +249,13 @@ func RegisterCompanyServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 }
 
 var (
-	pattern_CompanyService_GetCompany_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "companies", "id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_CompanySystem_GetCompany_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "companies", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_CompanyService_CreateCompany_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "companies"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_CompanySystem_CreateCompany_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "companies"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_CompanyService_GetCompany_0 = runtime.ForwardResponseMessage
+	forward_CompanySystem_GetCompany_0 = runtime.ForwardResponseMessage
 
-	forward_CompanyService_CreateCompany_0 = runtime.ForwardResponseMessage
+	forward_CompanySystem_CreateCompany_0 = runtime.ForwardResponseMessage
 )

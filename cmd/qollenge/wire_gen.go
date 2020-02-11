@@ -50,7 +50,7 @@ func miscMod() (grpcgw.Controller, error) {
 }
 
 func companyMod() (grpcgw.Controller, error) {
-	companyServiceServer := impl3.NewCompanyController()
-	wrappedCompanyServiceController := companypb.NewWrappedCompanyServiceServer(companyServiceServer)
-	return wrappedCompanyServiceController, nil
+	companySystemServer := impl3.NewCompanyController()
+	wrappedCompanySystemController := companypb.NewWrappedCompanySystemServer(companySystemServer)
+	return wrappedCompanySystemController, nil
 }

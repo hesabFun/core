@@ -26,27 +26,27 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-type WrappedCompanyServiceController interface {
-	CompanyServiceServer
+type WrappedCompanySystemController interface {
+	CompanySystemServer
 	elbix_dev_engine_pkg_grpcgw.Controller
 }
 
-type wrappedCompanyServiceServer struct {
-	original CompanyServiceServer
+type wrappedCompanySystemServer struct {
+	original CompanySystemServer
 	v        *gopkg_in_go_playground_validator_v9.Validate
 }
 
-func (w *wrappedCompanyServiceServer) Init(ctx golang_org_x_net_context.Context, conn *google_golang_org_grpc.ClientConn, mux *github_com_grpc_ecosystem_grpc_gateway_runtime.ServeMux) {
-	cl := NewCompanyServiceClient(conn)
+func (w *wrappedCompanySystemServer) Init(ctx golang_org_x_net_context.Context, conn *google_golang_org_grpc.ClientConn, mux *github_com_grpc_ecosystem_grpc_gateway_runtime.ServeMux) {
+	cl := NewCompanySystemClient(conn)
 
-	elbix_dev_engine_pkg_assert.Nil(RegisterCompanyServiceHandlerClient(ctx, mux, cl))
+	elbix_dev_engine_pkg_assert.Nil(RegisterCompanySystemHandlerClient(ctx, mux, cl))
 }
 
-func (w *wrappedCompanyServiceServer) InitGRPC(ctx golang_org_x_net_context.Context, s *google_golang_org_grpc.Server) {
-	RegisterCompanyServiceServer(s, w)
+func (w *wrappedCompanySystemServer) InitGRPC(ctx golang_org_x_net_context.Context, s *google_golang_org_grpc.Server) {
+	RegisterCompanySystemServer(s, w)
 }
 
-func (w *wrappedCompanyServiceServer) GetCompany(ctx golang_org_x_net_context.Context, req *GetCompanyRequest) (res *GetCompanyResponse, err error) {
+func (w *wrappedCompanySystemServer) GetCompany(ctx golang_org_x_net_context.Context, req *GetCompanyRequest) (res *GetCompanyResponse, err error) {
 	ctx, err = elbix_dev_engine_pkg_grpcgw.ExecuteMiddleware(ctx, w.original)
 	if err != nil {
 		return nil, err
@@ -59,7 +59,7 @@ func (w *wrappedCompanyServiceServer) GetCompany(ctx golang_org_x_net_context.Co
 	return
 }
 
-func (w *wrappedCompanyServiceServer) CreateCompany(ctx golang_org_x_net_context.Context, req *CreateCompanyRequest) (res *CreateCompanyResponse, err error) {
+func (w *wrappedCompanySystemServer) CreateCompany(ctx golang_org_x_net_context.Context, req *CreateCompanyRequest) (res *CreateCompanyResponse, err error) {
 	ctx, err = elbix_dev_engine_pkg_grpcgw.ExecuteMiddleware(ctx, w.original)
 	if err != nil {
 		return nil, err
@@ -72,13 +72,13 @@ func (w *wrappedCompanyServiceServer) CreateCompany(ctx golang_org_x_net_context
 	return
 }
 
-func NewWrappedCompanyServiceServer(server CompanyServiceServer) WrappedCompanyServiceController {
-	return &wrappedCompanyServiceServer{
+func NewWrappedCompanySystemServer(server CompanySystemServer) WrappedCompanySystemController {
+	return &wrappedCompanySystemServer{
 		original: server,
 		v:        gopkg_in_go_playground_validator_v9.New(),
 	}
 }
 func init() {
-	elbix_dev_engine_pkg_resources.RegisterResource("/company.CompanyService/GetCompany", "")
-	elbix_dev_engine_pkg_resources.RegisterResource("/company.CompanyService/CreateCompany", "")
+	elbix_dev_engine_pkg_resources.RegisterResource("/company.CompanySystem/GetCompany", "")
+	elbix_dev_engine_pkg_resources.RegisterResource("/company.CompanySystem/CreateCompany", "")
 }

@@ -7,30 +7,30 @@ import "github.com/fullstorydev/grpchan"
 import "golang.org/x/net/context"
 import "google.golang.org/grpc"
 
-func RegisterHandlerCompanyService(reg grpchan.ServiceRegistry, srv CompanyServiceServer) {
-	reg.RegisterService(&_CompanyService_serviceDesc, srv)
+func RegisterHandlerCompanySystem(reg grpchan.ServiceRegistry, srv CompanySystemServer) {
+	reg.RegisterService(&_CompanySystem_serviceDesc, srv)
 }
 
-type companyServiceChannelClient struct {
+type companySystemChannelClient struct {
 	ch grpchan.Channel
 }
 
-func NewCompanyServiceChannelClient(ch grpchan.Channel) CompanyServiceClient {
-	return &companyServiceChannelClient{ch: ch}
+func NewCompanySystemChannelClient(ch grpchan.Channel) CompanySystemClient {
+	return &companySystemChannelClient{ch: ch}
 }
 
-func (c *companyServiceChannelClient) GetCompany(ctx context.Context, in *GetCompanyRequest, opts ...grpc.CallOption) (*GetCompanyResponse, error) {
+func (c *companySystemChannelClient) GetCompany(ctx context.Context, in *GetCompanyRequest, opts ...grpc.CallOption) (*GetCompanyResponse, error) {
 	out := new(GetCompanyResponse)
-	err := c.ch.Invoke(ctx, "/company.CompanyService/GetCompany", in, out, opts...)
+	err := c.ch.Invoke(ctx, "/company.CompanySystem/GetCompany", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *companyServiceChannelClient) CreateCompany(ctx context.Context, in *CreateCompanyRequest, opts ...grpc.CallOption) (*CreateCompanyResponse, error) {
+func (c *companySystemChannelClient) CreateCompany(ctx context.Context, in *CreateCompanyRequest, opts ...grpc.CallOption) (*CreateCompanyResponse, error) {
 	out := new(CreateCompanyResponse)
-	err := c.ch.Invoke(ctx, "/company.CompanyService/CreateCompany", in, out, opts...)
+	err := c.ch.Invoke(ctx, "/company.CompanySystem/CreateCompany", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}

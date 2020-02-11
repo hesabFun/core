@@ -33,7 +33,7 @@
           }
         ],
         "tags": [
-          "CompanyService"
+          "CompanySystem"
         ],
         "security": [
           {
@@ -63,7 +63,7 @@
           }
         ],
         "tags": [
-          "CompanyService"
+          "CompanySystem"
         ],
         "security": [
           {
