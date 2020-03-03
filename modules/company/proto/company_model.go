@@ -9,7 +9,7 @@ import (
 func (m *Manager) AddCompany(ctx context.Context, name string) (*Company, error) {
 	u := Company{
 		Name:   name,
-		Status: CompanyStatus_COMPANY_STATUS_PENDING,
+		Status: CompanyStatus_COMPANY_STATUS_ACTIVE,
 	}
 
 	if err := m.CreateCompany(ctx, &u); err != nil {

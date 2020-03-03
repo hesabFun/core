@@ -131,7 +131,7 @@ mig-down-qollenge: tools-migration-qollenge
 test-qollenge: tools-migration-qollenge
 	E_SERVICES_POSTGRES_USER="$(DB_USER)_test" E_SERVICES_POSTGRES_DB="$(DB_NAME)_test" $(BIN)/qmigration -action=down-all
 	E_SERVICES_POSTGRES_USER="$(DB_USER)_test" E_SERVICES_POSTGRES_DB="$(DB_NAME)_test" $(BIN)/qmigration -action=up
-	$(GO) test ./pkg/... ./modules/misc/... ./modules/user/... -coverprofile cover.cp
+	$(GO) test ./pkg/... ./modules/misc/... ./modules/user/... ./modules/company/... -coverprofile cover.cp
 	E_SERVICES_POSTGRES_USER="$(DB_USER)_test" E_SERVICES_POSTGRES_DB="$(DB_NAME)_test" $(BIN)/qmigration -action=down-all
 
 proto: $(BIN)/prototool $(BIN)/protoc-gen-go $(BIN)/protoc-gen-grpc-gateway $(BIN)/protoc-gen-swagger $(BIN)/protoc-gen-grpchan $(BIN)/protoc-gen-gogo generators

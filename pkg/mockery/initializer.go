@@ -3,6 +3,7 @@ package mockery
 import (
 	"context"
 	"fmt"
+	"github.com/DATA-DOG/go-txdb"
 	"testing"
 
 	"elbix.dev/engine/pkg/config"
