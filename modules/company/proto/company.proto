@@ -36,7 +36,7 @@ message GetCompanyRequest {
     int64 id = 1;
 }
 
-message GetCompanyResponse {
+message CompanyResponse {
     int64 id = 1;
     string name = 2;
     CompanyStatus status = 3;
@@ -46,14 +46,8 @@ message CreateCompanyRequest {
     string name = 1;
 }
 
-message CreateCompanyResponse {
-    int64 id = 1;
-    string name = 2;
-    CompanyStatus status = 3;
-}
-
 service CompanySystem {
-    rpc GetCompany (GetCompanyRequest) returns (GetCompanyResponse) {
+    rpc GetCompany (GetCompanyRequest) returns (CompanyResponse) {
         option (google.api.http) = {
       get: "/v1/companies/{id}"
     };
@@ -76,7 +70,7 @@ CreateCompanyRequest
 )
 returns
 (
-CreateCompanyResponse
+CompanyResponse
 )
 {
 option (google.api.http) = {

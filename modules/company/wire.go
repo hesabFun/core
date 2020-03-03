@@ -14,9 +14,9 @@ import (
 
 // CompanySet is the builder used to build this module
 var CompanySet = wire.NewSet(
-	wire.Bind(new(grpcgw.Controller), new(companypb.WrappedCompanyServiceController)),
+	wire.Bind(new(grpcgw.Controller), new(companypb.WrappedCompanySystemController)),
 	sec.ParseRSAPrivateKeyFromBase64PEM,
 	sec.ExtractPublicFromPrivate,
-	companypb.NewWrappedCompanyServiceServer,
+	companypb.NewWrappedCompanySystemServer,
 	impl.NewCompanyController,
 )

@@ -46,7 +46,7 @@ func (w *wrappedCompanySystemServer) InitGRPC(ctx golang_org_x_net_context.Conte
 	RegisterCompanySystemServer(s, w)
 }
 
-func (w *wrappedCompanySystemServer) GetCompany(ctx golang_org_x_net_context.Context, req *GetCompanyRequest) (res *GetCompanyResponse, err error) {
+func (w *wrappedCompanySystemServer) GetCompany(ctx golang_org_x_net_context.Context, req *GetCompanyRequest) (res *CompanyResponse, err error) {
 	ctx, err = elbix_dev_engine_pkg_grpcgw.ExecuteMiddleware(ctx, w.original)
 	if err != nil {
 		return nil, err
@@ -59,7 +59,7 @@ func (w *wrappedCompanySystemServer) GetCompany(ctx golang_org_x_net_context.Con
 	return
 }
 
-func (w *wrappedCompanySystemServer) CreateCompany(ctx golang_org_x_net_context.Context, req *CreateCompanyRequest) (res *CreateCompanyResponse, err error) {
+func (w *wrappedCompanySystemServer) CreateCompany(ctx golang_org_x_net_context.Context, req *CreateCompanyRequest) (res *CompanyResponse, err error) {
 	ctx, err = elbix_dev_engine_pkg_grpcgw.ExecuteMiddleware(ctx, w.original)
 	if err != nil {
 		return nil, err

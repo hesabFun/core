@@ -18,7 +18,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/companyCreateCompanyResponse"
+              "$ref": "#/definitions/companyCompanyResponse"
             }
           }
         },
@@ -49,7 +49,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/companyGetCompanyResponse"
+              "$ref": "#/definitions/companyCompanyResponse"
             }
           }
         },
@@ -74,6 +74,21 @@
     }
   },
   "definitions": {
+    "companyCompanyResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/companyCompanyStatus"
+        }
+      }
+    },
     "companyCompanyStatus": {
       "type": "string",
       "enum": [
@@ -89,36 +104,6 @@
       "properties": {
         "name": {
           "type": "string"
-        }
-      }
-    },
-    "companyCreateCompanyResponse": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "name": {
-          "type": "string"
-        },
-        "status": {
-          "$ref": "#/definitions/companyCompanyStatus"
-        }
-      }
-    },
-    "companyGetCompanyResponse": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "name": {
-          "type": "string"
-        },
-        "status": {
-          "$ref": "#/definitions/companyCompanyStatus"
         }
       }
     }

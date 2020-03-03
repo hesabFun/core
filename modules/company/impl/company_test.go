@@ -20,7 +20,7 @@ func newClient() companypb.CompanySystemClient {
 	return companypb.NewCompanySystemChannelClient(ch)
 }
 
-func TestCompanyController_create_company(t *testing.T) {
+func TestCompanyController_createCompany(t *testing.T) {
 	ctx := context.Background()
 	defer mockery.Start(ctx, t)()
 

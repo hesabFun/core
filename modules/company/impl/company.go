@@ -9,7 +9,7 @@ import (
 
 type companyController struct{}
 
-func (uc *companyController) CreateCompany(ctx context.Context, rc *companypb.CreateCompanyRequest) (*companypb.CreateCompanyResponse, error) {
+func (uc *companyController) CreateCompany(ctx context.Context, rc *companypb.CreateCompanyRequest) (*companypb.CompanyResponse, error) {
 	m := companypb.NewManager()
 
 	c, err := m.AddCompany(ctx, rc.GetName())
@@ -17,20 +17,20 @@ func (uc *companyController) CreateCompany(ctx context.Context, rc *companypb.Cr
 		return nil, grpcgw.NewBadRequest(err, "company could not insert")
 	}
 
-	return &companypb.CreateCompanyResponse{
+	return &companypb.CompanyResponse{
 		Id:     c.GetId(),
 		Status: c.GetStatus(),
 		Name:   c.GetName(),
 	}, nil
 }
 
-func (uc *companyController) GetCompany(ctx context.Context, rc *companypb.GetCompanyRequest) (*companypb.GetCompanyResponse, error) {
+func (uc *companyController) GetCompany(ctx context.Context, rc *companypb.GetCompanyRequest) (*companypb.CompanyResponse, error) {
 	m := companypb.NewManager()
 
 	c, err := m.GetCompanyByPrimary(ctx, rc.GetId())
 	assert.Nil(err)
 
-	return &companypb.GetCompanyResponse{
+	return &companypb.CompanyResponse{
 		Id:     c.GetId(),
 		Name:   c.GetName(),
 		Status: c.GetStatus(),

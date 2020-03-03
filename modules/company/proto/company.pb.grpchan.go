@@ -19,8 +19,8 @@ func NewCompanySystemChannelClient(ch grpchan.Channel) CompanySystemClient {
 	return &companySystemChannelClient{ch: ch}
 }
 
-func (c *companySystemChannelClient) GetCompany(ctx context.Context, in *GetCompanyRequest, opts ...grpc.CallOption) (*GetCompanyResponse, error) {
-	out := new(GetCompanyResponse)
+func (c *companySystemChannelClient) GetCompany(ctx context.Context, in *GetCompanyRequest, opts ...grpc.CallOption) (*CompanyResponse, error) {
+	out := new(CompanyResponse)
 	err := c.ch.Invoke(ctx, "/company.CompanySystem/GetCompany", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -28,8 +28,8 @@ func (c *companySystemChannelClient) GetCompany(ctx context.Context, in *GetComp
 	return out, nil
 }
 
-func (c *companySystemChannelClient) CreateCompany(ctx context.Context, in *CreateCompanyRequest, opts ...grpc.CallOption) (*CreateCompanyResponse, error) {
-	out := new(CreateCompanyResponse)
+func (c *companySystemChannelClient) CreateCompany(ctx context.Context, in *CreateCompanyRequest, opts ...grpc.CallOption) (*CompanyResponse, error) {
+	out := new(CompanyResponse)
 	err := c.ch.Invoke(ctx, "/company.CompanySystem/CreateCompany", in, out, opts...)
 	if err != nil {
 		return nil, err
