@@ -2,10 +2,12 @@ package companypb
 
 import (
 	"context"
+	"fmt"
 	"github.com/pkg/errors"
+	"strings"
 )
 
-// RegisterUser is to register new user
+// AddCompany is to register new company
 func (m *Manager) AddCompany(ctx context.Context, name string) (*Company, error) {
 	u := Company{
 		Name:   name,
@@ -17,4 +19,37 @@ func (m *Manager) AddCompany(ctx context.Context, name string) (*Company, error)
 	}
 
 	return &u, nil
+}
+
+func (m *Manager) GetCompanies(ctx context.Context) (*CompaniesResponse, error) {
+	q := fmt.Sprintf(
+		"SELECT %s FROM %s WHERE id >= $1 ",
+		strings.Join(m.getCompanyFields(), ","),
+		CompanyTableFull,
+	)
+
+	//var companies []*Company
+	var companies []*CompanyResponse
+	var companiesResponse *CompaniesResponse
+
+	//todo: get user's companies
+	rows, err := m.GetDbMap().QueryxContext(ctx, q, 0)
+	if err != nil {
+		return companiesResponse, err
+	}
+
+	for rows.Next() {
+		c, err := m.scanCompany(rows)
+		if err != nil {
+			return companiesResponse, err
+		}
+		companies = append(companies, &CompanyResponse{
+			Id:     c.GetId(),
+			Name:   c.GetName(),
+			Status: c.GetStatus(),
+		})
+	}
+
+	companiesResponse = &CompaniesResponse{Companies: companies}
+	return companiesResponse, nil
 }

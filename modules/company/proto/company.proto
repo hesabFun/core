@@ -46,6 +46,13 @@ message CreateCompanyRequest {
     string name = 1;
 }
 
+message GetCompaniesRequest {
+}
+
+message CompaniesResponse {
+    repeated CompanyResponse companies = 1;
+}
+
 service CompanySystem {
     rpc GetCompany (GetCompanyRequest) returns (CompanyResponse) {
         option (google.api.http) = {
@@ -76,6 +83,22 @@ CompanyResponse
 option (google.api.http) = {
       post: "/v1/companies"
       body: "*"
+    };
+option (extra.resource) = "";
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+    security: {
+        security_requirement: {
+            key: "Authentication"
+            value: {}
+}
+}
+}
+;
+}
+
+rpc GetCompanies (GetCompaniesRequest) returns (CompaniesResponse) {
+option (google.api.http) = {
+      get: "/v1/companies"
     };
 option (extra.resource) = "";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {

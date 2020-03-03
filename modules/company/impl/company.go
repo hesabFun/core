@@ -37,6 +37,15 @@ func (uc *companyController) GetCompany(ctx context.Context, rc *companypb.GetCo
 	}, nil
 }
 
+func (uc *companyController) GetCompanies(ctx context.Context, rc *companypb.GetCompaniesRequest) (*companypb.CompaniesResponse, error) {
+	m := companypb.NewManager()
+
+	c, err := m.GetCompanies(ctx)
+	assert.Nil(err)
+
+	return c, nil
+}
+
 // NewCompanyController return a grpc user controller
 func NewCompanyController() companypb.CompanySystemServer {
 	return &companyController{}

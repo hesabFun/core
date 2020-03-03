@@ -119,6 +119,24 @@ func local_request_CompanySystem_CreateCompany_0(ctx context.Context, marshaler 
 
 }
 
+func request_CompanySystem_GetCompanies_0(ctx context.Context, marshaler runtime.Marshaler, client CompanySystemClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetCompaniesRequest
+	var metadata runtime.ServerMetadata
+
+	msg, err := client.GetCompanies(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_CompanySystem_GetCompanies_0(ctx context.Context, marshaler runtime.Marshaler, server CompanySystemServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetCompaniesRequest
+	var metadata runtime.ServerMetadata
+
+	msg, err := server.GetCompanies(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
 // RegisterCompanySystemHandlerServer registers the http handlers for service CompanySystem to "mux".
 // UnaryRPC     :call CompanySystemServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
@@ -161,6 +179,26 @@ func RegisterCompanySystemHandlerServer(ctx context.Context, mux *runtime.ServeM
 		}
 
 		forward_CompanySystem_CreateCompany_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_CompanySystem_GetCompanies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_CompanySystem_GetCompanies_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_CompanySystem_GetCompanies_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -245,6 +283,26 @@ func RegisterCompanySystemHandlerClient(ctx context.Context, mux *runtime.ServeM
 
 	})
 
+	mux.Handle("GET", pattern_CompanySystem_GetCompanies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_CompanySystem_GetCompanies_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_CompanySystem_GetCompanies_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	return nil
 }
 
@@ -252,10 +310,14 @@ var (
 	pattern_CompanySystem_GetCompany_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "companies", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_CompanySystem_CreateCompany_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "companies"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_CompanySystem_GetCompanies_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "companies"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
 	forward_CompanySystem_GetCompany_0 = runtime.ForwardResponseMessage
 
 	forward_CompanySystem_CreateCompany_0 = runtime.ForwardResponseMessage
+
+	forward_CompanySystem_GetCompanies_0 = runtime.ForwardResponseMessage
 )

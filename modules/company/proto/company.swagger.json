@@ -12,6 +12,25 @@
   ],
   "paths": {
     "/v1/companies": {
+      "get": {
+        "operationId": "GetCompanies",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/companyCompaniesResponse"
+            }
+          }
+        },
+        "tags": [
+          "CompanySystem"
+        ],
+        "security": [
+          {
+            "Authentication": []
+          }
+        ]
+      },
       "post": {
         "operationId": "CreateCompany",
         "responses": {
@@ -74,6 +93,17 @@
     }
   },
   "definitions": {
+    "companyCompaniesResponse": {
+      "type": "object",
+      "properties": {
+        "companies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/companyCompanyResponse"
+          }
+        }
+      }
+    },
     "companyCompanyResponse": {
       "type": "object",
       "properties": {

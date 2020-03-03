@@ -36,3 +36,12 @@ func (c *companySystemChannelClient) CreateCompany(ctx context.Context, in *Crea
 	}
 	return out, nil
 }
+
+func (c *companySystemChannelClient) GetCompanies(ctx context.Context, in *GetCompaniesRequest, opts ...grpc.CallOption) (*CompaniesResponse, error) {
+	out := new(CompaniesResponse)
+	err := c.ch.Invoke(ctx, "/company.CompanySystem/GetCompanies", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}

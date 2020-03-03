@@ -72,6 +72,19 @@ func (w *wrappedCompanySystemServer) CreateCompany(ctx golang_org_x_net_context.
 	return
 }
 
+func (w *wrappedCompanySystemServer) GetCompanies(ctx golang_org_x_net_context.Context, req *GetCompaniesRequest) (res *CompaniesResponse, err error) {
+	ctx, err = elbix_dev_engine_pkg_grpcgw.ExecuteMiddleware(ctx, w.original)
+	if err != nil {
+		return nil, err
+	}
+	if err = w.v.StructCtx(ctx, req); err != nil {
+		return nil, elbix_dev_engine_pkg_grpcgw.NewBadRequest(err, "validation failed")
+	}
+
+	res, err = w.original.GetCompanies(ctx, req)
+	return
+}
+
 func NewWrappedCompanySystemServer(server CompanySystemServer) WrappedCompanySystemController {
 	return &wrappedCompanySystemServer{
 		original: server,
@@ -81,4 +94,5 @@ func NewWrappedCompanySystemServer(server CompanySystemServer) WrappedCompanySys
 func init() {
 	elbix_dev_engine_pkg_resources.RegisterResource("/company.CompanySystem/GetCompany", "")
 	elbix_dev_engine_pkg_resources.RegisterResource("/company.CompanySystem/CreateCompany", "")
+	elbix_dev_engine_pkg_resources.RegisterResource("/company.CompanySystem/GetCompanies", "")
 }
