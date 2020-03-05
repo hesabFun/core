@@ -37,13 +37,22 @@ func (uc *companyController) GetCompany(ctx context.Context, rc *companypb.GetCo
 	}, nil
 }
 
-func (uc *companyController) GetCompanies(ctx context.Context, rc *companypb.GetCompaniesRequest) (*companypb.CompaniesResponse, error) {
+func (uc *companyController) GetCompanies(ctx context.Context, _ *companypb.GetCompaniesRequest) (*companypb.CompaniesResponse, error) {
 	m := companypb.NewManager()
 
 	c, err := m.GetCompanies(ctx)
 	assert.Nil(err)
 
 	return c, nil
+}
+
+func (uc *companyController) DeleteCompany(ctx context.Context, rc *companypb.DeleteCompanyRequest) (*companypb.DeleteCompanyResponse, error) {
+	m := companypb.NewManager()
+
+	err := m.DeleteCompany(ctx, rc.GetId())
+	assert.Nil(err)
+
+	return &companypb.DeleteCompanyResponse{}, nil
 }
 
 // NewCompanyController return a grpc user controller

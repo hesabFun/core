@@ -53,3 +53,18 @@ func (m *Manager) GetCompanies(ctx context.Context) (*CompaniesResponse, error) 
 	companiesResponse = &CompaniesResponse{Companies: companies}
 	return companiesResponse, nil
 }
+
+func (m *Manager) DeleteCompany(ctx context.Context, id int64) error {
+	c, err := m.GetCompanyByPrimary(ctx, id)
+	if err != nil {
+		return err
+	}
+
+	q := fmt.Sprintf(
+		"DELETE FROM %s WHERE id = $1 ",
+		CompanyTableFull,
+	)
+	_, err = m.GetDbMap().ExecContext(ctx, q, c.Id)
+
+	return err
+}
