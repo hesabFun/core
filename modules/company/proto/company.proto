@@ -60,6 +60,12 @@ message DeleteCompanyRequest {
 message DeleteCompanyResponse {
 }
 
+message UpdateCompanyRequest {
+    int64 id = 1;
+    string name = 2;
+    CompanyStatus status = 3;
+}
+
 service CompanySystem {
     rpc GetCompany (GetCompanyRequest) returns (CompanyResponse) {
         option (google.api.http) = {
@@ -135,4 +141,19 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
 ;
 }
 
+rpc UpdateCompany (UpdateCompanyRequest) returns (CompanyResponse) {
+option (google.api.http) = {
+      put: "/v1/companies/{id}"
+    };
+option (extra.resource) = "";
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+    security: {
+        security_requirement: {
+            key: "Authentication"
+            value: {}
+}
+}
+}
+;
+}
 }

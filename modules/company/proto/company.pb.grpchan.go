@@ -54,3 +54,12 @@ func (c *companySystemChannelClient) DeleteCompany(ctx context.Context, in *Dele
 	}
 	return out, nil
 }
+
+func (c *companySystemChannelClient) UpdateCompany(ctx context.Context, in *UpdateCompanyRequest, opts ...grpc.CallOption) (*CompanyResponse, error) {
+	out := new(CompanyResponse)
+	err := c.ch.Invoke(ctx, "/company.CompanySystem/UpdateCompany", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}

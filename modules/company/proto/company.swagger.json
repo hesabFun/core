@@ -117,6 +117,34 @@
             "Authentication": []
           }
         ]
+      },
+      "put": {
+        "operationId": "UpdateCompany",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/companyCompanyResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "CompanySystem"
+        ],
+        "security": [
+          {
+            "Authentication": []
+          }
+        ]
       }
     }
   },

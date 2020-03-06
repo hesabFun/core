@@ -28,7 +28,9 @@ func (uc *companyController) GetCompany(ctx context.Context, rc *companypb.GetCo
 	m := companypb.NewManager()
 
 	c, err := m.GetCompanyByPrimary(ctx, rc.GetId())
-	assert.Nil(err)
+	if err != nil {
+		return nil, grpcgw.NewBadRequest(err, "company could not found")
+	}
 
 	return &companypb.CompanyResponse{
 		Id:     c.GetId(),
@@ -49,10 +51,32 @@ func (uc *companyController) GetCompanies(ctx context.Context, _ *companypb.GetC
 func (uc *companyController) DeleteCompany(ctx context.Context, rc *companypb.DeleteCompanyRequest) (*companypb.DeleteCompanyResponse, error) {
 	m := companypb.NewManager()
 
-	err := m.DeleteCompany(ctx, rc.GetId())
+	_, err := m.GetCompanyByPrimary(ctx, rc.GetId())
+	if err != nil {
+		return nil, grpcgw.NewBadRequest(err, "company could not found")
+	}
+
+	err = m.DeleteCompany(ctx, rc.GetId())
 	assert.Nil(err)
 
 	return &companypb.DeleteCompanyResponse{}, nil
+}
+
+func (uc *companyController) UpdateCompany(ctx context.Context, rc *companypb.UpdateCompanyRequest) (*companypb.CompanyResponse, error) {
+	m := companypb.NewManager()
+
+	c, err := m.GetCompanyByPrimary(ctx, rc.GetId())
+	if err != nil {
+		return nil, grpcgw.NewBadRequest(err, "company could not found")
+	}
+
+	c.Name = rc.GetName()
+	c.Status = rc.GetStatus()
+
+	err = m.UpdateCompany(ctx, c)
+	assert.Nil(err)
+
+	return &companypb.CompanyResponse{}, nil
 }
 
 // NewCompanyController return a grpc user controller

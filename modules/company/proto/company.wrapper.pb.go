@@ -98,6 +98,19 @@ func (w *wrappedCompanySystemServer) DeleteCompany(ctx golang_org_x_net_context.
 	return
 }
 
+func (w *wrappedCompanySystemServer) UpdateCompany(ctx golang_org_x_net_context.Context, req *UpdateCompanyRequest) (res *CompanyResponse, err error) {
+	ctx, err = elbix_dev_engine_pkg_grpcgw.ExecuteMiddleware(ctx, w.original)
+	if err != nil {
+		return nil, err
+	}
+	if err = w.v.StructCtx(ctx, req); err != nil {
+		return nil, elbix_dev_engine_pkg_grpcgw.NewBadRequest(err, "validation failed")
+	}
+
+	res, err = w.original.UpdateCompany(ctx, req)
+	return
+}
+
 func NewWrappedCompanySystemServer(server CompanySystemServer) WrappedCompanySystemController {
 	return &wrappedCompanySystemServer{
 		original: server,
@@ -109,4 +122,5 @@ func init() {
 	elbix_dev_engine_pkg_resources.RegisterResource("/company.CompanySystem/CreateCompany", "")
 	elbix_dev_engine_pkg_resources.RegisterResource("/company.CompanySystem/GetCompanies", "")
 	elbix_dev_engine_pkg_resources.RegisterResource("/company.CompanySystem/DeleteCompany", "")
+	elbix_dev_engine_pkg_resources.RegisterResource("/company.CompanySystem/UpdateCompany", "")
 }
