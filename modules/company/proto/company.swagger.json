@@ -135,6 +135,14 @@
             "required": true,
             "type": "string",
             "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/companyUpdateCompanyRequest"
+            }
           }
         ],
         "tags": [
@@ -195,6 +203,21 @@
     },
     "companyDeleteCompanyResponse": {
       "type": "object"
+    },
+    "companyUpdateCompanyRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/companyCompanyStatus"
+        }
+      }
     }
   }
 }

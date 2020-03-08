@@ -76,7 +76,11 @@ func (uc *companyController) UpdateCompany(ctx context.Context, rc *companypb.Up
 	err = m.UpdateCompany(ctx, c)
 	assert.Nil(err)
 
-	return &companypb.CompanyResponse{}, nil
+	return &companypb.CompanyResponse{
+		Id:     c.GetId(),
+		Name:   c.GetName(),
+		Status: c.GetStatus(),
+	}, nil
 }
 
 // NewCompanyController return a grpc user controller
