@@ -67,3 +67,31 @@ func TestCompanyController_updateCompany(t *testing.T) {
 	assert.Equal(t, companypb.CompanyStatus_COMPANY_STATUS_PENDING, r2.GetStatus())
 	assert.NotNil(t, r2.GetId())
 }
+
+func TestCompanyController_DeleteCompany(t *testing.T) {
+	ctx := context.Background()
+	defer mockery.Start(ctx, t)()
+
+	c := newClient()
+	r, err := c.CreateCompany(ctx, &companypb.CreateCompanyRequest{
+		Name: "test company",
+	})
+
+	assert.NoError(t, err)
+	assert.NotNil(t, r)
+	assert.Equal(t, "test company", r.GetName())
+	assert.Equal(t, companypb.CompanyStatus_COMPANY_STATUS_ACTIVE, r.GetStatus())
+	assert.NotNil(t, r.GetId())
+
+	r2, err := c.DeleteCompany(ctx, &companypb.DeleteCompanyRequest{
+		Id: r.GetId(),
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, r2)
+
+	r3, err := c.GetCompany(ctx, &companypb.GetCompanyRequest{
+		Id: r.GetId(),
+	})
+	assert.Error(t, err)
+	assert.Nil(t, r3)
+}
