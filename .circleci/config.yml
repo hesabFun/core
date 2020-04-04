@@ -23,7 +23,6 @@ jobs:
       - run: cp .env.example .env
       - run: make lint
       - run: make test
-      - run: make build
 
   # deploy
   deploy:
