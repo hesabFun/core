@@ -10,9 +10,9 @@ import (
 )
 
 var (
-	user    = config.RegisterString("mockery.postgres.user", "engine_test", "postgres user")
-	dbname  = config.RegisterString("mockery.postgres.db", "engine_test", "postgres database")
-	pass    = config.RegisterString("mockery.postgres.password", "bita123", "postgres password")
+	user    = config.RegisterString("mockery.postgres.user", "hesabfun_test", "postgres user")
+	dbname  = config.RegisterString("mockery.postgres.db", "hesabfun_test", "postgres database")
+	pass    = config.RegisterString("mockery.postgres.password", "hesabfun123", "postgres password")
 	host    = config.RegisterString("mockery.postgres.host", "localhost", "postgres host")
 	port    = config.RegisterInt("mockery.postgres.port", 5432, "postgres port")
 	sslmode = config.RegisterString("mockery.postgres.sslmode", "disable", "sslmode for postgres")
