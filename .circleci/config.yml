@@ -6,16 +6,37 @@ jobs:
   build:
     docker:
       # specify the version
-      - image: circleci/golang:1.13
-      - image: circleci/postgres:11-alpine
+      - image: circleci/golang:1.14.1
         environment:
-          POSTGRES_USER: engine_test
-          POSTGRES_PASSWORD: bita123
-          POSTGRES_DB: engine_test
-      - image:  circleci/redis:latest
+          PROJECT: hesabfun
+          DEFAULT_PASS: hesabfun123
+      - image: circleci/postgres:12-alpine
+        environment:
+          POSTGRES_USER: hesabfun_test
+          POSTGRES_PASSWORD: hesabfun123
+          POSTGRES_DB: hesabfun_test
+      - image: circleci/redis:latest
 
-    working_directory: /go/src/elbix.dev/engine
+    working_directory: /go/src/hesab.fun/core
     steps:
       - checkout
       - run: make lint
       - run: make test
+      - run: make build
+
+  # deploy
+  deploy:
+    docker:
+      # specify the version
+      - image: circleci/golang:1.14.1
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: build and push Docker image
+          command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker build --build-arg APP_NAME=hesabfun --build-arg APP_PREFIX=q -t hesabfun/core:latest -t hesabfun/core:$TAG .
+            docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+            docker push hesabfun/core:$TAG
+            docker push hesabfun/core:latest

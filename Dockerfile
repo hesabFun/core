@@ -1,10 +1,10 @@
-FROM golang:1.12-alpine
+FROM golang:1.14.1-alpine AS builder
 
-ADD . /go/src/elbix.dev/engine
+ADD . /go/src/hesab.fun/core
 
 RUN apk add --no-cache --virtual .build-deps git gcc g++ libc-dev make \
     && apk add --no-cache ca-certificates bash \
-    && cd /go/src/elbix.dev/engine && make all \
+    && cd /go/src/hesab.fun/core && make all \
     && apk del .build-deps
 
 FROM alpine:3.6
@@ -12,8 +12,8 @@ FROM alpine:3.6
 ARG APP_NAME
 ARG APP_PREFIX
 
-COPY --from=0 /go/src/elbix.dev/engine/bin/${APP_PREFIX}server /bin/server
-COPY --from=0 /go/src/elbix.dev/engine/bin/${APP_PREFIX}migration /bin/migration
+COPY --from=builder /go/src/hesab.fun/core/bin/${APP_PREFIX}server /bin/server
+COPY --from=builder /go/src/hesab.fun/core/bin/${APP_PREFIX}migration /bin/migration
 ADD scripts/server.sh /bin/server.sh
 ADD scripts/migration.sh /bin/migration.sh
 ADD scripts/$APP_NAME/Procfile /bin/Procfile

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SCRIPT_DIR=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
-source ${SCRIPT_DIR}/project.sh || export PROJECT=engine
+source ${SCRIPT_DIR}/project.sh || export PROJECT=hesabfun
 
 echo "export GOPATH=/home/develop/go" >> /home/develop/.zshrc
 echo "export GOPATH=/home/develop/go" >> /etc/environment

@@ -169,7 +169,7 @@ watch: $(BIN)/reflex
 	$(BIN)/reflex -r '\.proto$$' make code-gen
 
 deploy-qollenge:
-	$(DOCKER) build --build-arg APP_NAME=qollenge --build-arg APP_PREFIX=q -t dokku/qollenge:$(COMMIT_COUNT) .
+	$(DOCKER) build --build-arg APP_NAME=hesabfun --build-arg APP_PREFIX=q -t dokku/qollenge:$(COMMIT_COUNT) .
 	$(DOCKER) save dokku/qollenge:$(COMMIT_COUNT) | $(SSH) -o "StrictHostKeyChecking no" root@$(DOKKU_HOST) "docker load"
 	$(SSH) -o "StrictHostKeyChecking no" root@$(DOKKU_HOST) "dokku tags:deploy qollenge $(COMMIT_COUNT)"
 
