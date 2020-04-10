@@ -1,6 +1,7 @@
 FROM golang:1.14.1-alpine AS builder
 
 ADD . /go/src/hesab.fun/core
+ADD ./.env.example /go/src/hesab.fun/core/.env
 
 RUN apk add --no-cache --virtual .build-deps git gcc g++ libc-dev make \
     && apk add --no-cache ca-certificates bash \
