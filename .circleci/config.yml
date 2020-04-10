@@ -36,7 +36,7 @@ jobs:
           name: build and push Docker image
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
-            docker build --build-arg APP_NAME=hesabfun --build-arg APP_PREFIX=q -t hesabfun/core:latest -t hesabfun/core:$TAG .
+            docker build -t hesabfun/core:latest -t hesabfun/core:$TAG .
             docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
             docker push hesabfun/core:$TAG
             docker push hesabfun/core:latest

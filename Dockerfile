@@ -9,18 +9,13 @@ RUN apk add --no-cache --virtual .build-deps git gcc g++ libc-dev make \
 
 FROM alpine:3.6
 
-ARG APP_NAME
-ARG APP_PREFIX
-
-COPY --from=builder /go/src/hesab.fun/core/bin/${APP_PREFIX}server /bin/server
-COPY --from=builder /go/src/hesab.fun/core/bin/${APP_PREFIX}migration /bin/migration
-ADD scripts/server.sh /bin/server.sh
-ADD scripts/migration.sh /bin/migration.sh
-ADD scripts/$APP_NAME/Procfile /bin/Procfile
-ADD scripts/$APP_NAME/CHECKS /bin/CHECKS
-ADD scripts/$APP_NAME/app.json /bin/app.json
-RUN chmod a+x /bin/server.sh /bin/migration.sh
+COPY --from=builder /go/src/hesab.fun/core/bin/qserver /bin/server
+COPY --from=builder /go/src/hesab.fun/core/bin/qmigration /bin/migration
+ADD scripts/entrypoint.sh /bin/entrypoint.sh
+RUN chmod a+x /bin/entrypoint.sh
 
 EXPOSE 80
 
 WORKDIR /bin
+
+CMD ["/bin/entrypoint.sh"]
