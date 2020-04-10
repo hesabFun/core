@@ -16,7 +16,6 @@ jobs:
           POSTGRES_PASSWORD: hesabfun123
           POSTGRES_DB: hesabfun_test
       - image: circleci/redis:latest
-
     working_directory: /go/src/hesab.fun/core
     steps:
       - checkout
@@ -31,13 +30,6 @@ jobs:
         environment:
           PROJECT: hesabfun
           DEFAULT_PASS: hesabfun123
-      - image: circleci/postgres:12-alpine
-        environment:
-          POSTGRES_USER: hesabfun_test
-          POSTGRES_PASSWORD: hesabfun123
-          POSTGRES_DB: hesabfun_test
-      - image: circleci/redis:latest
-
     working_directory: /go/src/hesab.fun/core
     steps:
       - checkout
